@@ -1,0 +1,260 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+ * Design tokens. See design-system/MASTER.md for the rules these encode.
+ * Brand palette and type pairing are client-specified and frozen.
+ */
+:root {
+  color-scheme: dark;
+
+  --background: #050608;
+  --background-secondary: #08111f;
+  --surface: #0c1420;
+  --surface-hover: #101b2b;
+  --foreground: #ffffff;
+  --foreground-muted: #aeb7c4;
+  --accent: #1e7bff;
+  --accent-secondary: #2ea9ff;
+  --glow: #57d5ff;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-glow: var(--glow);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  /* Satoshi: headings, buttons, statistics. Inter: nav, body, captions. */
+  --font-heading: var(--font-satoshi), "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Exactly three radius tiers: rounded-input, rounded-card, rounded-full. */
+  --radius-input: 8px;
+  --radius-card: 20px;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Fixed navbar clearance for every in-page anchor. */
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Removes the 300ms tap delay and the default tap flash on touch devices. */
+a,
+button,
+[role="button"],
+input,
+select,
+textarea,
+summary {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tailwind v4 preflight ships buttons with the default cursor. */
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /*
+   * Scroll-reveal wrappers start at opacity 0 and are revealed by JS. If the
+   * runtime check misses, or hydration is slow, that content would never
+   * appear. CSS is the authority here so reduced-motion users always see it.
+   */
+  .js-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/*
+ * Accessibility menu preferences. Set on <html> as data-a11y-* by the inline
+ * head script before first paint, and kept current by A11yProvider. Styling
+ * lives here rather than in components so a preference cannot be lost when a
+ * component forgets to read the context.
+ */
+
+:root[data-a11y-text="large"] {
+  font-size: 112.5%;
+}
+:root[data-a11y-text="larger"] {
+  font-size: 125%;
+}
+
+:root[data-a11y-motion="reduce"] {
+  scroll-behavior: auto !important;
+}
+:root[data-a11y-motion="reduce"] *,
+:root[data-a11y-motion="reduce"] *::before,
+:root[data-a11y-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+:root[data-a11y-motion="reduce"] .js-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+:root[data-a11y-contrast="high"] {
+  --foreground-muted: #e3e9f1;
+  --border: rgba(255, 255, 255, 0.3);
+  --border-strong: rgba(255, 255, 255, 0.52);
+  --surface: #0a1220;
+  --surface-hover: #121e30;
+}
+/* Blur softens the edge between text and whatever sits behind it. */
+:root[data-a11y-contrast="high"] .glass-panel,
+:root[data-a11y-contrast="high"] [class*="backdrop-blur"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+:root[data-a11y-contrast="high"] [data-slot="site-header"] {
+  background-color: var(--background);
+}
+/* Copy over video needs the scrim opaque, not graded. */
+:root[data-a11y-contrast="high"] [data-slot="hero-scrim"] {
+  background: rgba(5, 6, 8, 0.88);
+}
+/*
+ * Darken only. This rule used to crush saturation as well, which fought the
+ * commissioned artwork the tint above is deliberately built around; dimming
+ * alone gives overlaid text its contrast without draining the palette.
+ */
+:root[data-a11y-contrast="high"] .img-brand-tint {
+  filter: contrast(1.12) brightness(0.62);
+}
+
+:root[data-a11y-links="underline"]
+  a:not([data-slot="button"]):not([data-slot="icon-link"]) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Horizontal gutter that clears iOS notches in landscape. */
+  .px-gutter {
+    padding-inline: max(1.25rem, env(safe-area-inset-left));
+    padding-inline-end: max(1.25rem, env(safe-area-inset-right));
+  }
+
+  @media (min-width: 640px) {
+    .px-gutter {
+      padding-inline: max(2rem, env(safe-area-inset-left));
+      padding-inline-end: max(2rem, env(safe-area-inset-right));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .px-gutter {
+      padding-inline: max(4rem, env(safe-area-inset-left));
+      padding-inline-end: max(4rem, env(safe-area-inset-right));
+    }
+  }
+
+  .glass-panel {
+    background: color-mix(in oklab, var(--surface) 65%, transparent);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+  }
+
+  /*
+   * Previously crushed saturation to 25% because the stock photography arrived
+   * with mismatched casts and the blue scrim over each image had to supply the
+   * accent. The artwork is now commissioned in the brand palette already, so
+   * the correction is a light seat rather than a desaturation: knocking it back
+   * would grey out the blue and amber the images are built around.
+   */
+  .img-brand-tint {
+    filter: contrast(1.04) brightness(0.96);
+  }
+
+  /*
+   * Blue-tinted hairlines, deliberately flat: no bloom, no nodes. The grid is
+   * ground the content sits on, so the line alpha stays low enough that it
+   * never competes with the copy. Callers layer `opacity-40` on top of this.
+   */
+  .bg-grid {
+    --grid-line: rgba(46, 169, 255, 0.12);
+
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-panel {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}

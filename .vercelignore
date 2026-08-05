@@ -1,0 +1,23 @@
+# Files uploaded to the build but never used by it. Everything the site serves
+# is already under public/ or src/.
+
+# Image and video masters, ~40 MB. The delivered WebP and MP4 are derived from
+# these and committed under public/; the masters exist only for a re-encode.
+source-assets
+
+# Design documentation, read by people rather than the build.
+Design Reference
+design-system
+
+# Build-time artwork tooling. Needs an OpenRouter key that no longer exists in
+# the environment, and is never invoked by `next build`.
+scripts
+
+# Local caches and secrets. `.env*` is also in .gitignore; naming it here as
+# well means a stray local file cannot ride along in a CLI deploy.
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+.next
+node_modules

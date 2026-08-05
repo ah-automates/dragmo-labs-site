@@ -1,0 +1,56 @@
+{
+  "approach": {
+    "file": "approach.webp",
+    "width": 1184,
+    "height": 864,
+    "alt": "A layered system architecture rendered as glowing tiers above a circuit board",
+    "source": "openrouter",
+    "model": "google/gemini-2.5-flash-image"
+  },
+  "capabilityAi": {
+    "file": "capabilityAi.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "A glowing neural network brain rising from a processor on a circuit board",
+    "source": "provided"
+  },
+  "capabilityAutomation": {
+    "file": "capabilityAutomation.webp",
+    "width": 1536,
+    "height": 1024,
+    "alt": "A central gear linked by glowing paths to icons for data, mail, reporting and cloud services",
+    "source": "provided"
+  },
+  "serviceWeb": {
+    "file": "serviceWeb.webp",
+    "width": 1248,
+    "height": 832,
+    "alt": "A glowing browser window floating above a circuit board",
+    "source": "openrouter",
+    "model": "google/gemini-2.5-flash-image"
+  },
+  "serviceApps": {
+    "file": "serviceApps.webp",
+    "width": 1248,
+    "height": 832,
+    "alt": "Interlocking application panels connected above a circuit board",
+    "source": "openrouter",
+    "model": "google/gemini-2.5-flash-image"
+  },
+  "serviceDesign": {
+    "file": "serviceDesign.webp",
+    "width": 1248,
+    "height": 832,
+    "alt": "Design layers rising from wireframe to finished interface",
+    "source": "openrouter",
+    "model": "google/gemini-2.5-flash-image"
+  },
+  "contact": {
+    "file": "contact.webp",
+    "width": 1248,
+    "height": 832,
+    "alt": "A glowing globe of connected nodes above a circuit board",
+    "source": "openrouter",
+    "model": "google/gemini-2.5-flash-image"
+  }
+}
