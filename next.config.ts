@@ -3,6 +3,21 @@ import type { NextConfig } from "next";
 /** Cloudflare serves the Turnstile widget, its iframe, and its verify calls. */
 const TURNSTILE = "https://challenges.cloudflare.com";
 
+const IS_DEV = process.env.NODE_ENV !== "production";
+
+/**
+ * `next dev` compiles every module into an `eval()` call so the browser can map
+ * a stack frame back to the original source, and React Fast Refresh does the
+ * same on every hot update. Without `'unsafe-eval'` the whole client bundle is
+ * refused, so nothing hydrates: no navigation menu, no accessibility panel, no
+ * contact form, and `window.turnstile` never gets defined. It is scoped to the
+ * dev server and is never emitted by `next build`.
+ */
+const DEV_SCRIPT_SRC = IS_DEV ? " 'unsafe-eval'" : "";
+
+/** Hot reload talks to the dev server over a websocket on the same origin. */
+const DEV_CONNECT_SRC = IS_DEV ? " ws: wss:" : "";
+
 /**
  * Content Security Policy.
  *
@@ -17,13 +32,13 @@ const TURNSTILE = "https://challenges.cloudflare.com";
  */
 const CSP = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' ${TURNSTILE}`,
+  `script-src 'self' 'unsafe-inline' ${TURNSTILE}${DEV_SCRIPT_SRC}`,
   // Tailwind and next/font both emit inline <style> blocks.
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
   "media-src 'self'",
-  `connect-src 'self' ${TURNSTILE}`,
+  `connect-src 'self' ${TURNSTILE}${DEV_CONNECT_SRC}`,
   `frame-src ${TURNSTILE}`,
   "object-src 'none'",
   "base-uri 'self'",

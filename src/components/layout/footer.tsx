@@ -5,6 +5,7 @@ import { Instagram, Linkedin, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/shared/container";
 import { Logo } from "@/components/layout/logo";
 import { footerLinks, siteConfig } from "@/lib/data";
+import { policyLinks } from "@/lib/policies";
 
 /**
  * X's own mark, inlined because lucide ships no brand logo for it — its `X`
@@ -94,6 +95,20 @@ export function Footer() {
           </p>
           {/* The Pexels credit was removed with the stock photography it
               covered. All site imagery is now commissioned or generated. */}
+          <nav aria-label="Legal">
+            <ul role="list" className="flex flex-wrap items-center gap-x-6 gap-y-2">
+              {policyLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="inline-block rounded-input text-xs text-foreground-muted/70 transition-colors duration-300 hover:text-accent-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background-secondary"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </Container>
     </footer>

@@ -104,8 +104,13 @@ export default function ContactPage() {
                   src={photo.src}
                   alt={photo.alt}
                   fill
-                  sizes="(min-width: 1024px) 32vw, 100vw"
-                  loading="lazy"
+                  /* This page has no hero above it, so on desktop the photo
+                     sits above the fold and is the LCP candidate; lazy-loading
+                     it delays the paint. The wrapper is `hidden lg:block`, and
+                     a preload ignores CSS, so the narrow branch keeps phones
+                     from fetching a full-width copy of an invisible image. */
+                  sizes="(min-width: 1024px) 32vw, 1px"
+                  priority
                   className="img-brand-tint object-cover"
                 />
                 <span aria-hidden className="absolute inset-0 bg-accent/8 mix-blend-overlay" />

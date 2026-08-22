@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { siteConfig } from "@/lib/data";
+import { policyLinks } from "@/lib/policies";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -19,5 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.7,
     },
+    // Rarely change, but they are linked site-wide and worth indexing.
+    ...policyLinks.map((link) => ({
+      url: `${siteConfig.url}${link.href}`,
+      lastModified,
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
+    })),
   ];
 }
