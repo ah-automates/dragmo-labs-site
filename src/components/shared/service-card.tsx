@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { iconMap } from "@/lib/icons";
 import { images } from "@/lib/images";
 import type { Service } from "@/lib/data";
+import { EVENTS, LOCATIONS } from "@/lib/analytics";
 
 /**
  * The whole card is the link, so the hover lift matches a real hit area.
@@ -30,6 +31,9 @@ export function ServiceCard({
     <Link
       href={href}
       id={service.slug}
+      data-analytics-event={EVENTS.serviceCta}
+      data-analytics-location={LOCATIONS.services}
+      data-analytics-service={service.title}
       className={cn(
         "group relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-card border border-border transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-accent/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         isFeature

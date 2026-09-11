@@ -4,6 +4,7 @@ import { Container, Section } from "@/components/shared/container";
 import { ContactForm } from "@/components/shared/contact-form";
 import { FadeIn } from "@/components/shared/motion";
 import { siteConfig } from "@/lib/data";
+import { LOCATIONS } from "@/lib/analytics";
 
 const details = [
   {
@@ -72,6 +73,7 @@ export function ContactSection() {
                       {href ? (
                         <a
                           href={href}
+                          data-analytics-location={LOCATIONS.homeContactDetails}
                           className="flex items-start gap-4 py-4 transition-colors duration-200 hover:text-accent-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background-secondary"
                         >
                           {content}

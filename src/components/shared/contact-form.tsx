@@ -8,6 +8,7 @@ import { Input, Label, Select, Textarea } from "@/components/ui/input";
 import { EASE } from "@/components/shared/motion";
 import { Turnstile, type TurnstileHandle } from "@/components/shared/turnstile";
 import { cn } from "@/lib/utils";
+import { EVENTS, LOCATIONS, trackEvent } from "@/lib/analytics";
 import {
   budgetOptions,
   emptyContactForm,
@@ -18,6 +19,10 @@ import {
 } from "@/lib/contact-schema";
 
 type Status = "idle" | "submitting" | "success";
+
+/** Distinguishes a server-reported failure from a network/fetch failure, for
+ *  the `error_type` on `form_error`. Carries no sensitive data of its own. */
+class ContactSubmitError extends Error {}
 
 /** Declaration order matches DOM order, so error focus lands on the right field. */
 const FIELD_ORDER: (keyof ContactFormValues)[] = [
@@ -33,9 +38,13 @@ const FIELD_ORDER: (keyof ContactFormValues)[] = [
 export function ContactForm({
   className,
   variant = "full",
+  formLocation,
 }: {
   className?: string;
   variant?: "full" | "compact";
+  /** Where this form instance sits, for the `form_location` analytics param.
+   *  Defaults from `variant` when the page does not need to be more specific. */
+  formLocation?: string;
 }) {
   const [values, setValues] = React.useState<ContactFormValues>(emptyContactForm);
   const [errors, setErrors] = React.useState<ContactErrors>({});
@@ -46,6 +55,15 @@ export function ContactForm({
   const turnstileRef = React.useRef<TurnstileHandle>(null);
   // Uncontrolled, so it neither re-renders the form nor counts toward isDirty.
   const honeypotRef = React.useRef<HTMLInputElement>(null);
+
+  // No sensitive data ever goes into these params — only which form, where it
+  // sits on the page, and which fields (never their values) failed.
+  const formName = variant === "full" ? "contact_full" : "contact_compact";
+  const location = formLocation ?? (variant === "full" ? LOCATIONS.contactPage : LOCATIONS.homeContact);
+
+  // Guards `form_start` so it fires once per genuine attempt, not once per
+  // keystroke. Reset when the visitor starts a fresh message after a success.
+  const hasStartedRef = React.useRef(false);
 
   const turnstileEnabled = Boolean(
     process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
@@ -81,6 +99,10 @@ export function ContactForm({
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
       >,
     ) => {
+      if (!hasStartedRef.current) {
+        hasStartedRef.current = true;
+        trackEvent(EVENTS.formStart, { form_name: formName, form_location: location });
+      }
       const { value } = event.target;
       setValues((prev) => ({ ...prev, [field]: value }));
       setErrors((prev) => {
@@ -99,16 +121,29 @@ export function ContactForm({
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setServerError(null);
+    trackEvent(EVENTS.formSubmitAttempt, { form_name: formName, form_location: location });
 
     const nextErrors = validateContact(values);
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       focusFirstError(nextErrors);
+      trackEvent(EVENTS.formError, {
+        form_name: formName,
+        form_location: location,
+        error_type: "validation",
+        // Field names only, e.g. "email,message" — never the values entered.
+        error_fields: Object.keys(nextErrors).join(","),
+      });
       return;
     }
 
     if (turnstileEnabled && !token) {
       setServerError("Complete the verification below to continue.");
+      trackEvent(EVENTS.formError, {
+        form_name: formName,
+        form_location: location,
+        error_type: "verification",
+      });
       return;
     }
 
@@ -137,10 +172,23 @@ export function ContactForm({
           setErrors(data.errors);
           focusFirstError(data.errors);
           setStatus("idle");
+          trackEvent(EVENTS.formError, {
+            form_name: formName,
+            form_location: location,
+            error_type: "server_validation",
+            error_fields: Object.keys(data.errors).join(","),
+          });
           return;
         }
-        throw new Error(data?.error ?? "Something went wrong. Try again.");
+        throw new ContactSubmitError(data?.error ?? "Something went wrong. Try again.");
       }
+
+      // The success event GA4 recommends for a captured lead. Placed only on
+      // this path, reached only after the server confirms the send, so a
+      // Submit click alone — validation failure, a rejected token, a 4xx/5xx —
+      // can never produce it, and this is the single call site, so one
+      // successful submission is always exactly one `generate_lead`.
+      trackEvent(EVENTS.generateLead, { form_name: formName, form_location: location });
 
       setStatus("success");
       setValues(emptyContactForm);
@@ -150,6 +198,11 @@ export function ContactForm({
       setServerError(
         error instanceof Error ? error.message : "Something went wrong. Try again.",
       );
+      trackEvent(EVENTS.formError, {
+        form_name: formName,
+        form_location: location,
+        error_type: error instanceof ContactSubmitError ? "server" : "network",
+      });
     }
   }
 
@@ -178,7 +231,11 @@ export function ContactForm({
         </p>
         <button
           type="button"
-          onClick={() => setStatus("idle")}
+          onClick={() => {
+            // A fresh message is a new attempt, so it earns its own form_start.
+            hasStartedRef.current = false;
+            setStatus("idle");
+          }}
           className="mt-1 inline-flex h-11 items-center rounded-input border border-border-strong px-6 font-heading text-sm font-semibold text-foreground transition-[border-color,background-color] duration-300 hover:border-accent/50 hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           Send Another Message

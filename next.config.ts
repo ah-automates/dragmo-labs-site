@@ -3,6 +3,17 @@ import type { NextConfig } from "next";
 /** Cloudflare serves the Turnstile widget, its iframe, and its verify calls. */
 const TURNSTILE = "https://challenges.cloudflare.com";
 
+/**
+ * Google Analytics 4. The loader and inline init are served from
+ * googletagmanager.com; the hit itself goes to a `google-analytics.com` or
+ * `analytics.google.com` subdomain chosen by the client library, and falls
+ * back to an `img-src` beacon when `sendBeacon`/fetch are unavailable.
+ */
+const GA_SCRIPT_SRC = "https://www.googletagmanager.com";
+const GA_CONNECT_SRC =
+  "https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com";
+const GA_IMG_SRC = "https://*.google-analytics.com https://www.googletagmanager.com";
+
 const IS_DEV = process.env.NODE_ENV !== "production";
 
 /**
@@ -32,13 +43,13 @@ const DEV_CONNECT_SRC = IS_DEV ? " ws: wss:" : "";
  */
 const CSP = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' ${TURNSTILE}${DEV_SCRIPT_SRC}`,
+  `script-src 'self' 'unsafe-inline' ${TURNSTILE} ${GA_SCRIPT_SRC}${DEV_SCRIPT_SRC}`,
   // Tailwind and next/font both emit inline <style> blocks.
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  `img-src 'self' data: blob: ${GA_IMG_SRC}`,
   "font-src 'self' data:",
   "media-src 'self'",
-  `connect-src 'self' ${TURNSTILE}${DEV_CONNECT_SRC}`,
+  `connect-src 'self' ${TURNSTILE} ${GA_CONNECT_SRC}${DEV_CONNECT_SRC}`,
   `frame-src ${TURNSTILE}`,
   "object-src 'none'",
   "base-uri 'self'",

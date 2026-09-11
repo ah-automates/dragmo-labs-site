@@ -8,6 +8,7 @@ import { iconMap } from "@/lib/icons";
 import { images } from "@/lib/images";
 import { services } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { EVENTS, LOCATIONS } from "@/lib/analytics";
 
 /**
  * Asymmetric bento: one large image-led tile plus two supporting tiles.
@@ -39,6 +40,9 @@ export function Capabilities() {
           <StaggerChild className="lg:col-span-2 lg:row-span-2">
             <Link
               href="/services"
+              data-analytics-event={EVENTS.serviceCta}
+              data-analytics-location={LOCATIONS.capabilities}
+              data-analytics-service={lead.title}
               className="group relative flex h-full min-h-[22rem] flex-col justify-end overflow-hidden rounded-card border border-border transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-accent/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {leadImage && (
@@ -89,6 +93,9 @@ export function Capabilities() {
               <StaggerChild key={service.slug}>
                 <Link
                   href="/services"
+                  data-analytics-event={EVENTS.serviceCta}
+                  data-analytics-location={LOCATIONS.capabilities}
+                  data-analytics-service={service.title}
                   className={cn(
                     "group relative flex h-full min-h-[15rem] flex-col justify-end overflow-hidden rounded-card border border-border transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-accent/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     // Tiles without artwork fall back to a flat surface so the

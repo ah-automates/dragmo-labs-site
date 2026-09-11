@@ -4,6 +4,7 @@ import { Container, Section } from "@/components/shared/container";
 import { FadeIn } from "@/components/shared/motion";
 import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { EVENTS, LOCATIONS } from "@/lib/analytics";
 
 type CTABlockProps = {
   title: React.ReactNode;
@@ -35,7 +36,13 @@ export function CTABlock({
               <p className="text-pretty text-base leading-relaxed text-foreground-muted sm:text-lg">
                 {description}
               </p>
-              <ButtonLink href={primary.href} size="lg" className="mt-2">
+              <ButtonLink
+                href={primary.href}
+                size="lg"
+                className="mt-2"
+                data-analytics-event={EVENTS.contact}
+                data-analytics-location={LOCATIONS.ctaBlock}
+              >
                 {primary.label}
                 <ArrowRight
                   className="size-4.5 transition-transform duration-300 group-hover:translate-x-1"

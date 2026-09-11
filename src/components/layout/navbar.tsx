@@ -12,6 +12,7 @@ import { EASE } from "@/components/shared/motion";
 import { ButtonLink } from "@/components/ui/button";
 import { CTA_LABEL, navLinks } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { EVENTS, LOCATIONS } from "@/lib/analytics";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -142,7 +143,12 @@ export function Navbar() {
         </nav>
 
         <div className="hidden lg:block">
-          <ButtonLink href="/contact" size="sm">
+          <ButtonLink
+            href="/contact"
+            size="sm"
+            data-analytics-event={EVENTS.contact}
+            data-analytics-location={LOCATIONS.navbar}
+          >
             {CTA_LABEL}
             <ArrowRight
               className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
@@ -201,6 +207,8 @@ export function Navbar() {
                 href="/contact"
                 onClick={closeMenu}
                 className="mt-3 w-full"
+                data-analytics-event={EVENTS.contact}
+                data-analytics-location={LOCATIONS.navbarMobile}
               >
                 {CTA_LABEL}
                 <ArrowRight className="size-4" aria-hidden />

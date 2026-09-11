@@ -5,6 +5,7 @@ import { Container } from "@/components/shared/container";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { FadeIn } from "@/components/shared/motion";
+import { EVENTS, LOCATIONS } from "@/lib/analytics";
 
 type PageHeroProps = {
   eyebrow?: string;
@@ -51,7 +52,12 @@ export function PageHero({
           {ctaHref && ctaLabel && (
             <FadeIn delay={0.18} className="mt-2">
               {/* Plain anchor: a fragment jump needs no client navigation. */}
-              <a href={ctaHref} className={buttonVariants()}>
+              <a
+                href={ctaHref}
+                className={buttonVariants()}
+                data-analytics-event={EVENTS.cta}
+                data-analytics-location={LOCATIONS.pageHero}
+              >
                 {ctaLabel}
                 <ArrowDown
                   className="size-4 transition-transform duration-300 group-hover:translate-y-0.5"

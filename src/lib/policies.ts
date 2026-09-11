@@ -623,11 +623,15 @@ const privacyPolicy: Policy = {
       blocks: [
         {
           kind: "text",
-          text: "Our website may use cookies and similar technologies to improve functionality, analyze website usage, and enhance user experience.",
+          text: "We use Google Analytics to understand how visitors use this website and to improve it. Google Analytics does not directly identify you by name; it may collect your approximate location (derived from IP address), device and browser type, the pages you view, and how you arrived at the site.",
         },
         {
           kind: "text",
-          text: "You may be able to control or disable cookies through your browser settings. Please note that disabling cookies may affect certain website features.",
+          text: "No analytics cookie is set until you make a choice. When you first visit, a banner asks you to accept or decline analytics cookies. If you decline, or take no action, Google Analytics still runs in a cookieless mode that cannot follow you across visits.",
+        },
+        {
+          kind: "text",
+          text: "You can change your choice at any time using the **Cookie Preferences** link in the site footer, or by controlling or disabling cookies through your browser settings. Disabling cookies may affect certain website features.",
         },
       ],
     },

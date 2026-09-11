@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 
 import { A11yMenu } from "@/components/a11y/a11y-menu";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
+import { CookieConsentBanner } from "@/components/analytics/cookie-consent-banner";
 import { A11yProvider } from "@/components/a11y/a11y-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -93,6 +95,8 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: A11Y_INIT_SCRIPT }} />
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
+        <GoogleAnalytics />
+        <CookieConsentBanner />
         <A11yProvider>
           <a
             href="#main"

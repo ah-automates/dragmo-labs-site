@@ -6,6 +6,8 @@ import { Container } from "@/components/shared/container";
 import { Logo } from "@/components/layout/logo";
 import { footerLinks, siteConfig } from "@/lib/data";
 import { policyLinks } from "@/lib/policies";
+import { LOCATIONS } from "@/lib/analytics";
+import { CookiePreferencesLink } from "@/components/analytics/cookie-preferences-link";
 
 /**
  * X's own mark, inlined because lucide ships no brand logo for it — its `X`
@@ -54,6 +56,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   aria-label={label}
                   data-slot="icon-link"
+                  data-analytics-location={LOCATIONS.footerSocial}
                   className="inline-flex size-10 items-center justify-center rounded-full border border-border text-foreground-muted transition-[border-color,background-color,color,transform] duration-300 hover:-translate-y-0.5 hover:border-accent/50 hover:bg-accent/10 hover:text-accent-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background-secondary"
                 >
                   <Icon className={size} aria-hidden />
@@ -74,6 +77,7 @@ export function Footer() {
                 <a
                   href={`mailto:${siteConfig.email}`}
                   translate="no"
+                  data-analytics-location={LOCATIONS.footer}
                   className="flex items-start gap-3 rounded-input text-foreground-muted transition-colors duration-300 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background-secondary"
                 >
                   <Mail className="mt-0.5 size-4 shrink-0 text-accent-secondary" aria-hidden />
@@ -107,6 +111,9 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <CookiePreferencesLink />
+              </li>
             </ul>
           </nav>
         </div>

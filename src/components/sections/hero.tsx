@@ -9,6 +9,7 @@ import { Container } from "@/components/shared/container";
 import { ButtonLink } from "@/components/ui/button";
 import { EASE } from "@/components/shared/motion";
 import { CTA_LABEL } from "@/lib/data";
+import { EVENTS, LOCATIONS } from "@/lib/analytics";
 
 export function Hero() {
   const reduceMotion = useMotionPreference();
@@ -107,7 +108,12 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.18, ease: EASE }}
             className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center sm:justify-center"
           >
-            <ButtonLink href="/contact" size="lg">
+            <ButtonLink
+              href="/contact"
+              size="lg"
+              data-analytics-event={EVENTS.contact}
+              data-analytics-location={LOCATIONS.hero}
+            >
               {CTA_LABEL}
               <ArrowRight
                 className="size-4.5 transition-transform duration-300 group-hover:translate-x-1"
@@ -119,6 +125,8 @@ export function Hero() {
               variant="secondary"
               size="lg"
               className="backdrop-blur-md"
+              data-analytics-event={EVENTS.cta}
+              data-analytics-location={LOCATIONS.hero}
             >
               See What We Do
             </ButtonLink>
