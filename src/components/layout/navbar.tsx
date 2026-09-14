@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { Container } from "@/components/shared/container";
 import { Logo } from "@/components/layout/logo";
@@ -107,10 +107,14 @@ export function Navbar() {
       )}
       style={{ paddingTop: "env(safe-area-inset-top)" }}
     >
-      <Container
+      {/* Not the shared `Container`: that centers a 1280px box, which on
+          anything wider leaves the logo and CTA stranded well short of the
+          real edges. A plain gutter-padded, full-width bar keeps them
+          anchored to the true left/right edges at any viewport width. */}
+      <div
         className={cn(
-          "flex items-center justify-between transition-[height] duration-300",
-          scrolled ? "h-16" : "h-20",
+          "flex w-full items-center justify-between px-gutter transition-[height] duration-300",
+          scrolled ? "h-14 lg:h-24" : "h-16 lg:h-28",
         )}
       >
         <Logo />
@@ -145,13 +149,19 @@ export function Navbar() {
         <div className="hidden lg:block">
           <ButtonLink
             href="/contact"
+            variant="secondary"
             size="sm"
+            /* `!` forced: buttonVariants' own `rounded-input`/`border-border-strong`
+               aren't recognized as conflicting by tailwind-merge (custom
+               theme keys, not its default class groups), so a plain
+               override class was silently losing to the base styles. */
+            className="!rounded-full !border-white/35"
             data-analytics-event={EVENTS.contact}
             data-analytics-location={LOCATIONS.navbar}
           >
             {CTA_LABEL}
-            <ArrowRight
-              className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
+            <ArrowUpRight
+              className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               aria-hidden
             />
           </ButtonLink>
@@ -168,7 +178,7 @@ export function Navbar() {
         >
           {open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
         </button>
-      </Container>
+      </div>
 
       <AnimatePresence>
         {open && (
