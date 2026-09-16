@@ -9,21 +9,26 @@ import { cn } from "@/lib/utils";
  * routes through this so hover, focus, and contrast cannot drift apart.
  */
 export const buttonVariants = cva(
-  "group relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-input font-heading font-semibold tracking-tight transition-[background-color,border-color,box-shadow,transform] duration-300 ease-out disabled:pointer-events-none disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "group relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-input font-heading font-semibold tracking-tight transition-[background-color,border-color,box-shadow,transform] duration-300 ease-out active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 disabled:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
+        /*
+         * Inner lit edge rather than an outer drop-glow (design-system/
+         * MASTER.md §4, client-authorized 2026-09-14): depth from a simulated
+         * physical edge, not a halo around the button.
+         */
         primary:
-          "bg-accent text-white shadow-[0_10px_30px_-12px_rgba(30,123,255,0.85)] hover:-translate-y-0.5 hover:bg-accent-secondary active:translate-y-0",
+          "bg-accent text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_1px_2px_rgba(3,6,14,0.4)] hover:-translate-y-0.5 hover:bg-accent-secondary active:translate-y-0",
         secondary:
-          "border border-border-strong bg-white/[0.04] text-foreground hover:-translate-y-0.5 hover:border-accent-secondary/50 hover:bg-white/[0.08] active:translate-y-0",
+          "border border-border-strong bg-white/[0.04] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] hover:-translate-y-0.5 hover:border-accent-secondary/50 hover:bg-white/[0.08] active:translate-y-0",
         outline:
           "border border-border-strong text-foreground hover:border-accent/50 hover:bg-white/[0.05]",
       },
       size: {
         sm: "h-11 px-6 text-sm",
-        md: "h-13 px-7 text-sm",
-        lg: "h-14 px-8 text-base",
+        md: "h-12 px-7 text-base",
+        lg: "h-14 px-9 text-lg",
       },
     },
     defaultVariants: { variant: "primary", size: "md" },

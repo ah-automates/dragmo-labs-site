@@ -113,6 +113,19 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: false,
   },
 
+  async redirects() {
+    return [
+      // The dedicated testimonials page was folded into the home page's
+      // `#testimonials` section 2026-09-15. This was a real, sitemapped URL,
+      // so a permanent redirect replaces it rather than letting it 404.
+      {
+        source: "/testimonials",
+        destination: "/#testimonials",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

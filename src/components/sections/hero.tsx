@@ -224,7 +224,7 @@ export function Hero() {
           <motion.p
             {...revealMotionProps(revealed, reduceMotion, 16, 6)}
             transition={{ duration: 0.6, delay: 0, ease: EASE }}
-            className="text-xs font-semibold uppercase tracking-[0.3em] text-foreground-muted"
+            className="font-mono text-[11px] font-medium uppercase tracking-[0.28em] text-foreground-muted"
           >
             Automation / Apps / AI Integration
           </motion.p>
@@ -237,7 +237,7 @@ export function Hero() {
           <motion.h1
             {...revealMotionProps(revealed, reduceMotion, 34, 10)}
             transition={{ duration: 0.9, delay: 0.14, ease: EASE }}
-            className="text-balance font-heading text-[clamp(2rem,7vw,4.25rem)] font-extrabold leading-[1.08] tracking-[-0.04em] text-foreground lg:text-[clamp(2.75rem,5.2vw,4.25rem)] lg:leading-[1.05]"
+            className="text-balance font-heading text-[clamp(2.1rem,7.2vw,4.5rem)] font-extrabold leading-[1.03] tracking-[-0.045em] text-foreground lg:text-[clamp(2.75rem,5.4vw,4.5rem)] lg:leading-[0.98]"
           >
             Software That{" "}
             <br className="hidden lg:inline" />
@@ -276,8 +276,8 @@ export function Hero() {
 
             <Link
               href="/case-studies"
-              className="group inline-flex items-center gap-3"
-              data-analytics-event={EVENTS.cta}
+              className="group inline-flex items-center gap-3 active:scale-[0.98]"
+              data-analytics-event={EVENTS.caseStudy}
               data-analytics-location={LOCATIONS.hero}
             >
               <span className="flex size-11 items-center justify-center rounded-full border border-border-strong bg-white/[0.04] backdrop-blur-md transition-colors duration-300 group-hover:border-accent-secondary/50 group-hover:bg-white/[0.08]">
@@ -289,43 +289,6 @@ export function Hero() {
             </Link>
           </motion.div>
         </div>
-      </div>
-
-      {/* Anchored to the section itself (not the content wrapper above) so
-          it sits near the true bottom of the viewport with real breathing
-          room below the buttons, matching the reference's spacious use of
-          the full hero height, instead of being glued tight under the copy
-          block. `left-0` on an absolute element sits at the ancestor's
-          padding-box edge, before px-gutter's own padding — so this needs
-          its own copy of that padding rather than inheriting the column's.
-          Centered below `lg` to match the centered copy above it; `mx-auto`
-          on a `w-fit` element centers it without disturbing the desktop
-          left alignment, which resets via `lg:mx-0`. */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-10 z-10 px-gutter">
-        <motion.div
-          {...revealMotionProps(revealed, reduceMotion, 16, 4)}
-          transition={{ duration: 0.65, delay: 0.66, ease: EASE }}
-          className="pointer-events-auto mx-auto flex w-fit items-center gap-3 text-xs text-foreground-muted lg:mx-0"
-        >
-          <span aria-hidden className="relative h-8 w-px overflow-hidden bg-border-strong">
-            {/* Small bright segment traveling down the tick, looping, as
-                the "scroll" motion cue. Off under reduced motion — the
-                static line plus label alone is still a clear affordance. */}
-            {!reduceMotion && (
-              <motion.span
-                className="absolute inset-x-0 top-0 h-3 bg-gradient-to-b from-transparent via-accent-secondary to-transparent"
-                animate={{ y: [-12, 32] }}
-                transition={{
-                  duration: 1.6,
-                  repeat: Infinity,
-                  repeatDelay: 0.4,
-                  ease: "easeInOut",
-                }}
-              />
-            )}
-          </span>
-          Scroll to explore
-        </motion.div>
       </div>
     </section>
   );

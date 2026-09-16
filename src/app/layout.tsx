@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
 import { A11yMenu } from "@/components/a11y/a11y-menu";
@@ -10,6 +10,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { A11Y_INIT_SCRIPT } from "@/lib/a11y";
 import { siteConfig } from "@/lib/data";
+import { buildSiteMenu } from "@/lib/nav";
 
 import "./globals.css";
 
@@ -31,6 +32,14 @@ const satoshi = localFont({
 /** Inter: UI face for navigation, body copy, and captions. */
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+/** JetBrains Mono: third type role — data, timestamps, console chrome, micro-labels. */
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
@@ -76,10 +85,15 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // Built here, not inside `Navbar` itself: `navbar.tsx` is a client
+  // component, and this derivation touches `products.ts`/`case-studies.ts`,
+  // which must never enter the client bundle. See `src/lib/nav.ts`.
+  const siteMenu = buildSiteMenu();
+
   return (
     <html
       lang="en"
-      className={`${satoshi.variable} ${inter.variable} h-full`}
+      className={`${satoshi.variable} ${inter.variable} ${jetbrainsMono.variable} h-full`}
       /* The head script stamps data-a11y-* here before hydration, so the
          server markup legitimately differs from the client. */
       suppressHydrationWarning
@@ -108,7 +122,7 @@ export default function RootLayout({
               this early in the DOM costs nothing visually but means keyboard
               users reach the settings without tabbing the whole page. */}
           <A11yMenu />
-          <Navbar />
+          <Navbar menu={siteMenu} />
           <main id="main" className="flex-1">
             {children}
           </main>

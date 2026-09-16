@@ -39,12 +39,20 @@ export function ContactForm({
   className,
   variant = "full",
   formLocation,
+  submitLabel = "Send Message",
+  successTitle = "Message Received",
+  successBody = "Thanks for reaching out. A senior strategist will review your details and reply within one business day.",
 }: {
   className?: string;
   variant?: "full" | "compact";
   /** Where this form instance sits, for the `form_location` analytics param.
    *  Defaults from `variant` when the page does not need to be more specific. */
   formLocation?: string;
+  /** Overrides the submit button's label, e.g. "Request Your Free Strategy Call"
+   *  on a product page, where "Send Message" is the wrong verb for the ask. */
+  submitLabel?: string;
+  successTitle?: string;
+  successBody?: string;
 }) {
   const [values, setValues] = React.useState<ContactFormValues>(emptyContactForm);
   const [errors, setErrors] = React.useState<ContactErrors>({});
@@ -215,7 +223,7 @@ export function ContactForm({
         role="status"
         aria-live="polite"
         className={cn(
-          "flex flex-col items-center justify-center gap-5 rounded-card border border-border bg-surface/60 p-10 text-center sm:p-14",
+          "flex flex-col items-start justify-center gap-5 rounded-card border border-border bg-surface/50 p-8 text-left sm:p-10",
           className,
         )}
       >
@@ -223,11 +231,10 @@ export function ContactForm({
           <CheckCircle2 className="size-8" aria-hidden />
         </span>
         <h3 className="font-heading text-2xl font-bold tracking-tight text-foreground">
-          Message Received
+          {successTitle}
         </h3>
-        <p className="max-w-md text-pretty text-sm leading-relaxed text-foreground-muted">
-          Thanks for reaching out. A senior strategist will review your details
-          and reply within one business day.
+        <p className="measure-narrow text-pretty text-base leading-relaxed text-foreground-muted">
+          {successBody}
         </p>
         <button
           type="button"
@@ -236,7 +243,7 @@ export function ContactForm({
             hasStartedRef.current = false;
             setStatus("idle");
           }}
-          className="mt-1 inline-flex h-11 items-center rounded-input border border-border-strong px-6 font-heading text-sm font-semibold text-foreground transition-[border-color,background-color] duration-300 hover:border-accent/50 hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="mt-1 inline-flex h-11 items-center rounded-input border border-border-strong px-6 font-heading text-base font-semibold text-foreground transition-[border-color,background-color] duration-300 hover:border-accent/50 hover:bg-white/[0.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           Send Another Message
         </button>
@@ -249,7 +256,7 @@ export function ContactForm({
       noValidate
       onSubmit={handleSubmit}
       className={cn(
-        "relative overflow-hidden rounded-card border border-border bg-surface/50 p-6 sm:p-8 lg:p-10",
+        "relative flex flex-col gap-6 overflow-hidden rounded-card border border-border bg-surface/50 p-6 sm:p-8 lg:p-10",
         className,
       )}
     >
@@ -389,14 +396,11 @@ export function ContactForm({
           </p>
         )}
 
-        <div className="mt-1 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-[260px] text-xs leading-relaxed text-foreground-muted/70">
-            We only use your details to reply to this inquiry.
-          </p>
+        <div className="mt-1 flex flex-col gap-4">
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="group inline-flex h-13 w-full items-center justify-center gap-2 rounded-input bg-accent px-8 font-heading text-sm font-semibold text-white shadow-[0_10px_30px_-12px_rgba(30,123,255,0.85)] transition-[background-color,transform] duration-300 hover:-translate-y-0.5 hover:bg-accent-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-60 sm:w-auto"
+            className="group inline-flex h-13 w-full items-center justify-center gap-2 whitespace-nowrap rounded-input bg-accent px-8 font-heading text-base font-semibold text-white shadow-[0_10px_30px_-12px_rgba(30,123,255,0.85)] transition-[background-color,transform] duration-300 hover:-translate-y-0.5 hover:bg-accent-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-60"
           >
             {status === "submitting" ? (
               <>
@@ -405,7 +409,7 @@ export function ContactForm({
               </>
             ) : (
               <>
-                Send Message
+                {submitLabel}
                 <ArrowRight
                   className="size-4 transition-transform duration-300 group-hover:translate-x-1"
                   aria-hidden
@@ -413,6 +417,9 @@ export function ContactForm({
               </>
             )}
           </button>
+          <p className="text-center text-sm leading-relaxed text-foreground-muted/70">
+            We only use your details to reply to this inquiry.
+          </p>
         </div>
       </div>
     </form>

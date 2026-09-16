@@ -53,10 +53,10 @@ function Inline({ text }: { text: string }) {
 function ContactCard() {
   return (
     <div className="mt-1 flex w-fit flex-col gap-1 rounded-card border border-border bg-surface px-5 py-4">
-      <p className="font-heading text-sm font-semibold text-foreground" translate="no">
+      <p className="font-heading text-base font-semibold text-foreground" translate="no">
         {siteConfig.name}
       </p>
-      <p className="text-sm text-foreground-muted">
+      <p className="text-base text-foreground-muted">
         Email: <EmailLink />
       </p>
     </div>
@@ -81,7 +81,7 @@ function Block({ block }: { block: PolicyBlock }) {
           {block.items.map((item, i) => (
             <li
               key={item}
-              className="flex gap-3 text-[0.9375rem] leading-relaxed text-foreground-muted"
+              className="flex gap-3 text-base leading-relaxed text-foreground-muted"
             >
               {block.ordered ? (
                 <span
@@ -110,7 +110,7 @@ function Block({ block }: { block: PolicyBlock }) {
 
     case "text":
       return (
-        <p className="text-pretty text-[0.9375rem] leading-relaxed text-foreground-muted">
+        <p className="text-pretty text-base leading-relaxed text-foreground-muted">
           <Inline text={block.text} />
         </p>
       );
@@ -133,8 +133,12 @@ export function PolicyDocument({ policy }: { policy: Policy }) {
       />
 
       <Container className="relative">
-        <FadeIn className="flex max-w-3xl flex-col gap-5">
-          <h1 className="text-balance font-heading text-[clamp(2.25rem,5vw,3.75rem)] font-extrabold leading-[1.05] tracking-[-0.04em] text-foreground">
+        {/* Fills the row rather than a `max-w-3xl` cap (2026-09-15): legal
+            prose stays single-column (never CSS columns — it breaks
+            scanning and deep links), but a fixed cap still hugged the
+            header to the left with the row's right side empty. */}
+        <FadeIn className="flex flex-col gap-5">
+          <h1 className="text-pretty font-heading text-[clamp(2.5rem,5.4vw,4rem)] font-extrabold leading-[1.05] tracking-[-0.04em] text-foreground">
             {policy.title}
           </h1>
 
@@ -183,7 +187,7 @@ export function PolicyDocument({ policy }: { policy: Policy }) {
             </ol>
           </nav>
 
-          <article className="flex max-w-3xl flex-col gap-12">
+          <article className="flex flex-col gap-12">
             {policy.sections.map((section, i) => (
               <section
                 key={section.id}

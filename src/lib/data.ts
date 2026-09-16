@@ -1,5 +1,3 @@
-import type { ImageId } from "@/lib/images";
-
 export const siteConfig = {
   name: "Dragmo Labs",
   tagline: "AI Automation & Software Development",
@@ -14,94 +12,40 @@ export const siteConfig = {
     linkedin: "https://www.linkedin.com/company/dragmo-labs/",
     x: "https://x.com/DragmoLabs",
     instagram: "https://www.instagram.com/dragmolabs/",
+    facebook: "https://www.facebook.com/dragmolabs",
+    youtube: "https://www.youtube.com/@dragmolabs",
   },
 };
 
 /** One label per intent, used in nav, hero, and footer alike. */
 export const CTA_LABEL = "Get in Touch";
 
-export const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/services" },
-  { label: "Get in Touch", href: "/contact" },
-];
+/** The product pages' own intent: a free call, not a generic enquiry. */
+export const STRATEGY_CALL_CTA = "Request Your Free Strategy Call";
+
+// Nav links themselves live in `src/lib/nav.ts` now: Products, Case Studies,
+// and Services each carry a dropdown derived from the real data, and that
+// derivation has to happen in a server context (see the comment there for
+// why). "Get in Touch" is not repeated in either menu: the navbar already
+// renders it as its own CTA button beside these links, and having it in both
+// places duplicated the same destination twice in the header.
 
 export const footerLinks = {
   explore: [
     { label: "Home", href: "/" },
+    { label: "Products", href: "/products" },
+    { label: "Case Studies", href: "/case-studies" },
     { label: "Services", href: "/services" },
     { label: "Get in Touch", href: "/contact" },
   ],
-  services: [
-    { label: "AI Solutions", href: "/services#ai-solutions" },
-    { label: "AI Automation", href: "/services#ai-automation" },
-    { label: "Web Development", href: "/services#web-development" },
-    { label: "UI/UX Design", href: "/services#ui-ux-design" },
-  ],
 };
 
-export type Service = {
-  slug: string;
-  icon: "brain-circuit" | "bot" | "globe" | "layout-panel-left" | "pen-tool" | "rocket";
-  title: string;
-  description: string;
-  tags?: string[];
-  span?: "wide" | "full";
-  image?: ImageId;
-};
-
-export const services: Service[] = [
-  {
-    slug: "ai-solutions",
-    icon: "brain-circuit",
-    title: "AI Solutions",
-    description:
-      "Custom models and LLM-powered features trained on your data, your workflows, and your commercial goals rather than a generic template.",
-    image: "capabilityAi",
-  },
-  {
-    slug: "ai-automation",
-    icon: "bot",
-    title: "AI Automation",
-    description:
-      "Connect the tools you already run, remove the manual handoffs between them, and scale volume without scaling headcount.",
-    image: "capabilityAutomation",
-  },
-  {
-    slug: "web-development",
-    icon: "globe",
-    title: "Website Design & Development",
-    description:
-      "Fast, accessible sites built on modern infrastructure and engineered to turn traffic into qualified pipeline.",
-    image: "serviceWeb",
-  },
-  {
-    slug: "web-applications",
-    icon: "layout-panel-left",
-    title: "Web Applications",
-    description:
-      "Bespoke applications for the processes no off-the-shelf product covers. Scalable architecture that integrates with the data infrastructure you already have.",
-    span: "wide",
-    image: "serviceApps",
-  },
-  {
-    slug: "ui-ux-design",
-    icon: "pen-tool",
-    title: "UI/UX Design",
-    description:
-      "Interfaces grounded in real user research, with the hierarchy and polish that earn trust on first view.",
-    image: "serviceDesign",
-  },
-  {
-    slug: "digital-transformation",
-    icon: "rocket",
-    title: "Digital Transformation",
-    description:
-      "We audit your legacy systems, find the bottlenecks that actually cost you money, and sequence the move to an automated operating model.",
-    tags: ["Legacy Modernization", "Data Strategy", "Change Management"],
-    span: "full",
-  },
-];
+// Services moved to `src/lib/services.ts` (2026-09-16). Each service now
+// carries a full editorial detail page's copy (`ServiceDetail`), and this
+// file is imported by `navbar.tsx` and `hero.tsx`, both client components —
+// keeping that copy out of `data.ts` keeps it strictly client-safe rather
+// than merely tree-shakeable. See `context.md` §2 and
+// `design-system/pages/product.md` §6.
 
 export const processSteps = [
   { number: 1, label: "Discover" },

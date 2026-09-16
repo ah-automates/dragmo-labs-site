@@ -7,8 +7,12 @@ import {
   Globe,
   LayoutPanelLeft,
   MessageCircle,
+  MessageSquareText,
   PenTool,
+  PhoneCall,
+  Receipt,
   Rocket,
+  ShieldCheck,
   TrendingUp,
   type LucideIcon,
 } from "lucide-react";
@@ -26,8 +30,12 @@ export const iconMap = {
   globe: Globe,
   "layout-panel-left": LayoutPanelLeft,
   "message-circle": MessageCircle,
+  "message-square-text": MessageSquareText,
   "pen-tool": PenTool,
+  "phone-call": PhoneCall,
+  receipt: Receipt,
   rocket: Rocket,
+  "shield-check": ShieldCheck,
   "trending-up": TrendingUp,
 } satisfies Record<string, LucideIcon>;
 

@@ -21,12 +21,16 @@ export const emptyContactForm: ContactFormValues = {
 };
 
 export const interestOptions = [
+  "AI Voice Agent",
+  "AI WhatsApp Agent",
+  "3D Property Website",
+  "AI Invoice System",
   "AI Solutions",
   "AI Automation",
   "Website Design & Development",
   "Web Applications",
   "UI/UX Design",
-  "Digital Transformation",
+  "AI Consultation",
   "Other or not sure yet",
 ];
 

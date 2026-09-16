@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { Container, Section } from "@/components/shared/container";
 import { FadeIn } from "@/components/shared/motion";
+import { SectionOpener } from "@/components/shared/section-opener";
 import { images } from "@/lib/images";
 
 const capabilities = [
@@ -19,19 +20,15 @@ export function Approach() {
   const photo = images.approach;
 
   return (
-    <Section id="about" space="lg" className="overflow-hidden bg-background-secondary">
+    <Section id="about" space="lg" className="overflow-hidden border-t border-border bg-background-secondary">
       <Container>
         <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-10">
           <FadeIn className="flex flex-col gap-6 lg:col-span-6">
-            <h2 className="text-balance font-heading text-[clamp(2rem,4.2vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.03em] text-foreground">
-              Your business has potential. We build the technology to unlock it.
-            </h2>
-
-            <p className="max-w-xl text-pretty text-base leading-relaxed text-foreground-muted sm:text-lg">
-              We do not just write code, we architect solutions. Deep AI
-              expertise, rigorous strategy, and elegant design applied to
-              problems that show up on your balance sheet.
-            </p>
+            <SectionOpener
+              label="Our Approach"
+              title="Your business has potential. We build the technology to unlock it."
+              description="We do not just write code, we architect solutions. Deep AI expertise, rigorous strategy, and elegant design applied to problems that show up on your balance sheet."
+            />
 
             <ul className="mt-2 grid gap-x-8 gap-y-3 sm:grid-cols-2">
               {capabilities.map((item) => (

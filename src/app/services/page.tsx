@@ -1,45 +1,44 @@
 import type { Metadata } from "next";
 
 import { Container, Section } from "@/components/shared/container";
-import { PageHero } from "@/components/shared/page-hero";
-import { ServiceCard } from "@/components/shared/service-card";
+import { PageOpener } from "@/components/shared/page-opener";
+import { ServiceRow } from "@/components/shared/service-row";
 import { Process } from "@/components/sections/process";
-import { CTABlock } from "@/components/shared/cta-block";
+import { ClosingBand } from "@/components/shared/closing-band";
 import { Stagger, StaggerChild } from "@/components/shared/motion";
-import { services } from "@/lib/data";
-import { cn } from "@/lib/utils";
+import { services } from "@/lib/services";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "AI solutions, automation, web applications, and design. Digital services engineered around your business goals.",
+    "AI solutions, automation, consulting, web development, and design. Digital services engineered around your business goals.",
 };
 
 export default function ServicesPage() {
   return (
     <>
-      <PageHero
+      <PageOpener
         eyebrow="Our Services"
-        title="Digital Solutions Built Around Your Business."
+        title="Digital solutions built around your business."
         description="From AI-powered tools to high-performance digital experiences, we help businesses turn complex challenges into simple, scalable solutions."
         ctaHref="#services"
         ctaLabel="Explore Services"
       />
 
+      {/*
+       * Numbered editorial list, not a card grid (2026-09-15, replaces a
+       * 3-column grid of six identical bordered cards — an explicit
+       * `design-system/MASTER.md` §4 violation). Each row alternates its
+       * photo to the opposite side so six rows in sequence still have
+       * rhythm instead of repeating one layout six times.
+       */}
       <Section id="services" space="md" className="scroll-mt-20 bg-background">
         <Container>
           <h2 className="sr-only">Service offerings</h2>
-          <Stagger className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => (
-              <StaggerChild
-                key={service.slug}
-                className={cn(
-                  "h-full",
-                  service.span === "wide" && "lg:col-span-2",
-                  service.span === "full" && "md:col-span-2 lg:col-span-3",
-                )}
-              >
-                <ServiceCard service={service} />
+          <Stagger className="flex flex-col border-b border-border">
+            {services.map((service, i) => (
+              <StaggerChild key={service.slug}>
+                <ServiceRow service={service} index={i + 1} reverse={i % 2 === 1} />
               </StaggerChild>
             ))}
           </Stagger>
@@ -48,8 +47,8 @@ export default function ServicesPage() {
 
       <Process />
 
-      <CTABlock
-        title="Have a challenge? Let's solve it."
+      <ClosingBand
+        title="Have a challenge? Let’s solve it."
         description="Tell us how your operations run today and we will map out where software and automation actually pay off."
         primary={{ label: "Get in Touch", href: "/contact" }}
       />

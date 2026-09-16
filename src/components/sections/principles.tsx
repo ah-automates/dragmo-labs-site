@@ -1,5 +1,6 @@
 import { Container, Section } from "@/components/shared/container";
-import { FadeIn, Stagger, StaggerChild } from "@/components/shared/motion";
+import { Stagger, StaggerChild } from "@/components/shared/motion";
+import { SectionOpener } from "@/components/shared/section-opener";
 import { principles } from "@/lib/data";
 
 /**
@@ -10,12 +11,10 @@ export function Principles() {
   return (
     <Section space="md" className="bg-background">
       <Container>
-        <FadeIn className="mx-auto max-w-3xl text-center">
-          <h2 className="text-balance font-heading text-[clamp(2rem,4.2vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.03em] text-foreground">
-            Technology should not just look good. It should move your business
-            forward.
-          </h2>
-        </FadeIn>
+        <SectionOpener
+          label="Principles"
+          title="Technology should not just look good. It should move your business forward."
+        />
 
         <Stagger
           as="ol"
@@ -29,15 +28,15 @@ export function Principles() {
             >
               <span
                 aria-hidden
-                className="pt-0.5 font-heading text-sm font-bold tabular-nums text-accent-secondary/60 transition-colors duration-300 group-hover:text-accent-secondary"
+                className="pt-0.5 font-mono text-sm font-semibold text-accent-secondary/60 transition-colors duration-300 group-hover:text-accent-secondary"
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div className="flex flex-col gap-2">
-                <h3 className="font-heading text-lg font-bold tracking-tight text-foreground">
+                <h3 className="font-heading text-xl font-bold tracking-tight text-foreground">
                   {principle.title}
                 </h3>
-                <p className="text-pretty text-sm leading-relaxed text-foreground-muted">
+                <p className="text-pretty text-base leading-relaxed text-foreground-muted">
                   {principle.description}
                 </p>
               </div>

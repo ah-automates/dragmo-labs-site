@@ -3,6 +3,7 @@ import { Clock, Mail, MapPin } from "lucide-react";
 import { Container, Section } from "@/components/shared/container";
 import { ContactForm } from "@/components/shared/contact-form";
 import { FadeIn } from "@/components/shared/motion";
+import { SectionOpener } from "@/components/shared/section-opener";
 import { siteConfig } from "@/lib/data";
 import { LOCATIONS } from "@/lib/analytics";
 
@@ -35,18 +36,11 @@ export function ContactSection() {
       <Container>
         <div className="grid items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <div className="flex flex-col gap-6 lg:sticky lg:top-28">
-            <FadeIn>
-              <h2 className="text-balance font-heading text-[clamp(2rem,4.2vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.03em] text-foreground">
-                Let&rsquo;s build what&rsquo;s next.
-              </h2>
-            </FadeIn>
-
-            <FadeIn delay={0.06}>
-              <p className="max-w-md text-pretty text-base leading-relaxed text-foreground-muted">
-                Tell us what you are trying to build, automate, or fix. We will
-                come back with how we would approach it.
-              </p>
-            </FadeIn>
+            <SectionOpener
+              label="Get In Touch"
+              title="Let’s build what’s next."
+              description="Tell us what you are trying to build, automate, or fix. We will come back with how we would approach it."
+            />
 
             <FadeIn delay={0.12}>
               <ul className="mt-2 divide-y divide-border border-y border-border">
@@ -58,10 +52,10 @@ export function ContactSection() {
                         aria-hidden
                       />
                       <span className="flex min-w-0 flex-col gap-0.5">
-                        <span className="font-body text-[11px] font-medium uppercase tracking-[0.14em] text-foreground-muted">
+                        <span className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-foreground-muted">
                           {label}
                         </span>
-                        <span className="break-words text-sm font-medium text-foreground">
+                        <span className="break-words text-base font-medium text-foreground">
                           {value}
                         </span>
                       </span>

@@ -19,10 +19,10 @@ export default function NotFound() {
           >
             404
           </p>
-          <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground">
+          <h1 className="font-heading text-4xl font-bold tracking-tight text-foreground">
             This Page Took a Wrong Turn
           </h1>
-          <p className="text-pretty text-base leading-relaxed text-foreground-muted">
+          <p className="text-pretty text-lg leading-relaxed text-foreground-muted">
             The page you are looking for does not exist or has moved. Here is
             the way back.
           </p>

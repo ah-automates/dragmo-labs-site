@@ -121,7 +121,7 @@ export function A11yMenu() {
 
             <div className="flex flex-col gap-4 overflow-y-auto overscroll-contain px-5 py-4">
               <fieldset className="flex flex-col">
-                <legend className="font-body text-[11px] font-medium uppercase tracking-[0.14em] text-foreground-muted">
+                <legend className="font-body text-xs font-medium uppercase tracking-[0.14em] text-foreground-muted">
                   Text size
                 </legend>
                 <div className="mt-2.5 grid grid-cols-3 gap-1.5">

@@ -19,6 +19,22 @@
   --glow: #57d5ff;
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.14);
+
+  /*
+   * Elevation ladder — client-authorized addition, 2026-09-14 (see
+   * design-system/MASTER.md §2). `--surface` above stays as the general
+   * panel value everywhere it is already used; these three steps are for
+   * surfaces that need to read as genuinely lit objects on the dark ground,
+   * not just a slightly different grey box. `--panel` is the brightest step
+   * and is reserved for the "console" instrument surface (see
+   * `src/components/shared/console.tsx`); `--edge-light` is its inner
+   * top-edge highlight, and `--shadow-panel` is tinted with the ground hue
+   * rather than pure black, per MASTER §4's material rules.
+   */
+  --surface-raised: #131c2b;
+  --panel: #1a2435;
+  --edge-light: rgba(255, 255, 255, 0.1);
+  --shadow-panel: rgba(3, 6, 14, 0.55);
 }
 
 @theme inline {
@@ -33,14 +49,59 @@
   --color-glow: var(--glow);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
+  --color-surface-raised: var(--surface-raised);
+  --color-panel: var(--panel);
+  --color-edge-light: var(--edge-light);
+  --color-shadow-panel: var(--shadow-panel);
 
-  /* Satoshi: headings, buttons, statistics. Inter: nav, body, captions. */
+  /*
+   * Satoshi: headings, buttons, statistics. Inter: nav, body, captions.
+   * JetBrains Mono: third role, client-authorized 2026-09-14 — data,
+   * numerals, timestamps, identifiers, console chrome, and the uppercase
+   * micro-labels that replace the pill badge as a section's opener.
+   */
   --font-heading: var(--font-satoshi), "Satoshi", ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", Consolas, monospace;
 
   /* Exactly three radius tiers: rounded-input, rounded-card, rounded-full. */
   --radius-input: 8px;
   --radius-card: 20px;
+
+  /*
+   * Type scale — client-authorized rework, 2026-09-15 (design-system/MASTER.md
+   * §2). Tailwind's stock scale bottoms out at 12px/14px, and the site had
+   * drifted into using `text-sm` for card copy and `text-xs` for anything
+   * secondary: body topped out at 16px and most reading copy sat at 14px,
+   * which read as cramped next to comparable studio sites. Remapping the
+   * tokens once lifts every existing `text-*` class rather than editing ~200
+   * class strings, so the components stay idiomatic Tailwind.
+   *
+   * Every value stays in `rem`. `:root[data-a11y-text]` below scales the root
+   * font-size, and only rem-relative sizes follow it — a px value here would
+   * silently kill the accessibility text-size control.
+   *
+   * Line heights are unitless so they scale with the size they're paired with:
+   * ~1.65 for reading copy, tightening as the size climbs into display range.
+   */
+  --text-xs: 0.8125rem; /* 13px — mono eyebrows, legal micro-copy */
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.9375rem; /* 15px — secondary labels, bylines */
+  --text-sm--line-height: 1.6;
+  --text-base: 1.0625rem; /* 17px — default body */
+  --text-base--line-height: 1.65;
+  --text-lg: 1.1875rem; /* 19px — lead paragraphs, section descriptions */
+  --text-lg--line-height: 1.65;
+  --text-xl: 1.3125rem; /* 21px — h3 in rows and cards */
+  --text-xl--line-height: 1.45;
+  --text-2xl: 1.625rem; /* 26px — feature h3 */
+  --text-2xl--line-height: 1.3;
+  --text-3xl: 2rem; /* 32px */
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 2.5rem; /* 40px */
+  --text-4xl--line-height: 1.1;
+  --text-5xl: 3.25rem; /* 52px */
+  --text-5xl--line-height: 1.05;
 }
 
 * {
@@ -155,6 +216,9 @@ button:not(:disabled),
   --border-strong: rgba(255, 255, 255, 0.52);
   --surface: #0a1220;
   --surface-hover: #121e30;
+  --surface-raised: #16223a;
+  --panel: #1f2e4a;
+  --edge-light: rgba(255, 255, 255, 0.22);
 }
 /* Blur softens the edge between text and whatever sits behind it. */
 :root[data-a11y-contrast="high"] .glass-panel,
@@ -194,6 +258,30 @@ button:not(:disabled),
     text-wrap: pretty;
   }
 
+  /*
+   * Reading-measure utilities — client-authorized rework, 2026-09-15
+   * (design-system/MASTER.md §4). Section copy previously capped itself with
+   * ad-hoc `max-w-xl`/`max-w-2xl` guesses sized well under the 1280px
+   * container, which left half a row empty and forced headlines to wrap
+   * early. These give every section the same, deliberate measure instead of
+   * a new guess per component.
+   */
+  .measure {
+    max-width: 44rem; /* ~72ch at the new 17px body size */
+  }
+
+  .measure-narrow {
+    max-width: 34rem;
+  }
+
+  .measure-display {
+    max-width: 56rem;
+  }
+
+  .measure-display-wide {
+    max-width: 68rem;
+  }
+
   /* Horizontal gutter that clears iOS notches in landscape. */
   .px-gutter {
     padding-inline: max(1.25rem, env(safe-area-inset-left));
@@ -209,8 +297,30 @@ button:not(:disabled),
 
   @media (min-width: 1024px) {
     .px-gutter {
-      padding-inline: max(4rem, env(safe-area-inset-left));
-      padding-inline-end: max(4rem, env(safe-area-inset-right));
+      padding-inline: max(5rem, env(safe-area-inset-left));
+      padding-inline-end: max(5rem, env(safe-area-inset-right));
+    }
+  }
+
+  /*
+   * `Container` no longer caps its own width (2026-09-15) — it and the
+   * navbar both rely on `.px-gutter` alone for a symmetric inset, so a
+   * section heading lines up under the logo at any viewport width. Without
+   * a cap, content would otherwise run edge to edge on very wide monitors;
+   * these two steps widen the gutter instead of re-introducing a max-width
+   * that would just put the asymmetry back.
+   */
+  @media (min-width: 1536px) {
+    .px-gutter {
+      padding-inline: max(6rem, env(safe-area-inset-left));
+      padding-inline-end: max(6rem, env(safe-area-inset-right));
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .px-gutter {
+      padding-inline: max(8rem, env(safe-area-inset-left));
+      padding-inline-end: max(8rem, env(safe-area-inset-right));
     }
   }
 
@@ -248,6 +358,20 @@ button:not(:disabled),
 
   .bg-noise {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  /*
+   * The "lit panel" material: a surface that reads as an instrument sitting
+   * on the dark ground rather than a slightly-different-grey box. Depth
+   * comes from an inner top-edge highlight and a ground-tinted shadow, never
+   * from an outer glow — see MASTER §4. Used by `console.tsx` and any other
+   * surface that needs to feel genuinely raised.
+   */
+  .panel-lit {
+    background: var(--panel);
+    box-shadow:
+      inset 0 1px 0 var(--edge-light),
+      0 24px 48px -24px var(--shadow-panel);
   }
 }
 

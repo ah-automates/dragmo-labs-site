@@ -212,6 +212,7 @@ export const EVENTS = {
   serviceCta: "service_cta_click",
   pricingCta: "pricing_cta_click",
   caseStudy: "case_study_click",
+  videoPlay: "video_play",
   whatsapp: "whatsapp_click",
   email: "email_click",
   phone: "phone_click",
@@ -242,6 +243,19 @@ export const LOCATIONS = {
   footer: "footer",
   footerSocial: "footer_social",
   notFound: "not_found",
+  productsIndex: "products_index",
+  productHero: "product_hero",
+  productSolution: "product_solution",
+  productOffer: "product_offer",
+  productCta: "product_cta",
+  serviceHero: "service_hero",
+  serviceProof: "service_proof",
+  caseStudiesIndex: "case_studies_index",
+  caseStudyDetail: "case_study_detail",
+  homeCaseStudies: "home_case_studies_section",
+  homeTestimonials: "home_testimonials_section",
+  navDropdown: "nav_dropdown",
+  navDropdownMobile: "nav_dropdown_mobile",
 } as const;
 
 /* -------------------------------------------------------------------------- */

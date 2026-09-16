@@ -72,7 +72,7 @@ export function CookieConsentBanner() {
           style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         >
           <Container className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:py-6">
-            <p className="max-w-2xl text-pretty text-sm leading-relaxed text-foreground-muted">
+            <p className="max-w-2xl text-pretty text-base leading-relaxed text-foreground-muted">
               We use cookies to understand how visitors use this site and to
               improve it. No cookies are set unless you accept.{" "}
               <a

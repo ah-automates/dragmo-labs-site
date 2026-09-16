@@ -39,22 +39,17 @@ export default function ContactPage() {
 
   return (
     <Section className="relative overflow-hidden pb-20 pt-32 sm:pt-40" space="sm">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-grid opacity-40 [mask-image:radial-gradient(ellipse_at_center,black_10%,transparent_70%)]"
-      />
-
       <Container className="relative">
         <div className="grid items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <div className="flex flex-col gap-7 lg:sticky lg:top-28">
             <FadeIn delay={0.04}>
-              <h1 className="text-balance font-heading text-[clamp(2.25rem,5vw,3.75rem)] font-extrabold leading-[1.05] tracking-[-0.04em] text-foreground">
+              <h1 className="text-pretty font-heading text-[clamp(2.5rem,5.8vw,4.5rem)] font-extrabold leading-[0.98] tracking-[-0.045em] text-foreground">
                 Let&rsquo;s talk about your next big move.
               </h1>
             </FadeIn>
 
             <FadeIn delay={0.1}>
-              <p className="max-w-md text-pretty text-base leading-relaxed text-foreground-muted sm:text-lg">
+              <p className="measure-narrow text-pretty text-lg leading-relaxed text-foreground-muted">
                 Whether you have a clear project in mind or you are still
                 exploring what AI could do for you, we would like to hear about
                 it.
@@ -71,10 +66,10 @@ export default function ContactPage() {
                         aria-hidden
                       />
                       <span className="flex min-w-0 flex-col gap-0.5">
-                        <span className="font-body text-[11px] font-medium uppercase tracking-[0.14em] text-foreground-muted">
+                        <span className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-foreground-muted">
                           {label}
                         </span>
-                        <span className="break-words text-sm font-medium text-foreground">
+                        <span className="break-words text-base font-medium text-foreground">
                           {value}
                         </span>
                       </span>
@@ -120,7 +115,7 @@ export default function ContactPage() {
                   aria-hidden
                   className="absolute inset-0 bg-[linear-gradient(180deg,transparent_30%,rgba(5,6,8,0.85)_100%)]"
                 />
-                <p className="absolute inset-x-0 bottom-0 p-5 text-sm font-medium text-foreground">
+                <p className="absolute inset-x-0 bottom-0 p-5 text-base font-medium text-foreground">
                   Remote-first, working across time zones.
                 </p>
               </div>
@@ -130,10 +125,10 @@ export default function ContactPage() {
           <FadeIn delay={0.08}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
-                <h2 className="font-heading text-2xl font-bold tracking-tight text-foreground">
+                <h2 className="font-heading text-3xl font-extrabold tracking-[-0.02em] text-foreground">
                   Project Inquiry
                 </h2>
-                <p className="text-sm leading-relaxed text-foreground-muted">
+                <p className="text-base leading-relaxed text-foreground-muted">
                   Fill out the details below and a senior strategist will respond
                   within one business day.
                 </p>

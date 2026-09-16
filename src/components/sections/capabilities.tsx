@@ -3,10 +3,11 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Container, Section } from "@/components/shared/container";
-import { FadeIn, Stagger, StaggerChild } from "@/components/shared/motion";
+import { Stagger, StaggerChild } from "@/components/shared/motion";
+import { SectionOpener } from "@/components/shared/section-opener";
 import { iconMap } from "@/lib/icons";
 import { images } from "@/lib/images";
-import { services } from "@/lib/data";
+import { services } from "@/lib/services";
 import { cn } from "@/lib/utils";
 import { EVENTS, LOCATIONS } from "@/lib/analytics";
 
@@ -15,9 +16,7 @@ import { EVENTS, LOCATIONS } from "@/lib/analytics";
  * Three cells for three items, deliberately unequal.
  */
 export function Capabilities() {
-  const [lead, ...rest] = services
-    .filter((service) => service.span !== "full")
-    .slice(0, 3);
+  const [lead, ...rest] = services.slice(0, 3);
 
   const LeadIcon = iconMap[lead.icon];
   const leadImage = lead.image ? images[lead.image] : null;
@@ -25,25 +24,21 @@ export function Capabilities() {
   return (
     <Section space="md" className="bg-background">
       <Container>
-        <FadeIn className="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center">
-          <h2 className="text-balance font-heading text-[clamp(2rem,4.2vw,3.25rem)] font-bold leading-[1.08] tracking-[-0.03em] text-foreground">
-            Digital Solutions Built Around Your Business.
-          </h2>
-          <p className="max-w-xl text-pretty text-base leading-relaxed text-foreground-muted sm:text-lg">
-            From AI-powered tools to high-performance digital experiences, we
-            turn complex challenges into systems your team can actually run.
-          </p>
-        </FadeIn>
+        <SectionOpener
+          label="What We Build"
+          title="Digital solutions built around your business"
+          description="From AI-powered tools to high-performance digital experiences, we turn complex challenges into systems your team can actually run."
+        />
 
         <Stagger className="mt-14 grid gap-4 lg:grid-cols-3 lg:grid-rows-2">
           {/* Lead tile: spans two columns and both rows. */}
           <StaggerChild className="lg:col-span-2 lg:row-span-2">
             <Link
-              href="/services"
+              href={`/services/${lead.slug}`}
               data-analytics-event={EVENTS.serviceCta}
               data-analytics-location={LOCATIONS.capabilities}
               data-analytics-service={lead.title}
-              className="group relative flex h-full min-h-[22rem] flex-col justify-end overflow-hidden rounded-card border border-border transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-accent/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="group relative flex h-full min-h-[22rem] flex-col justify-end overflow-hidden rounded-card border border-border transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-accent/35 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               {leadImage && (
                 <Image
@@ -71,11 +66,11 @@ export function Capabilities() {
                 <h3 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
                   {lead.title}
                 </h3>
-                <p className="max-w-lg text-pretty text-sm leading-relaxed text-foreground-muted sm:text-base">
+                <p className="measure-narrow text-pretty text-base leading-relaxed text-foreground-muted sm:text-lg">
                   {lead.description}
                 </p>
                 <span className="mt-1 inline-flex items-center gap-1.5 font-heading text-sm font-semibold text-accent-secondary">
-                  Explore Services
+                  Learn More
                   <ArrowRight
                     className="size-4 transition-transform duration-300 group-hover:translate-x-1"
                     aria-hidden
@@ -92,15 +87,18 @@ export function Capabilities() {
             return (
               <StaggerChild key={service.slug}>
                 <Link
-                  href="/services"
+                  href={`/services/${service.slug}`}
                   data-analytics-event={EVENTS.serviceCta}
                   data-analytics-location={LOCATIONS.capabilities}
                   data-analytics-service={service.title}
                   className={cn(
-                    "group relative flex h-full min-h-[15rem] flex-col justify-end overflow-hidden rounded-card border border-border transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-accent/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                    // Tiles without artwork fall back to a flat surface so the
-                    // row still reads as one set.
-                    image ? "" : "bg-surface/50 hover:bg-surface-hover/60",
+                    "group relative flex h-full min-h-[15rem] flex-col justify-end overflow-hidden transition-[background-color,transform] duration-300 hover:-translate-y-1 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    // Tiles with artwork keep the frame the photo needs; the
+                    // text-only fallback drops the border entirely so the row
+                    // isn't a uniform set of boxes (design-system/MASTER.md §4).
+                    image
+                      ? "rounded-card border border-border hover:border-accent/35"
+                      : "border-t border-border bg-surface/40 hover:bg-surface-hover/60",
                   )}
                 >
                   {image && (
@@ -128,10 +126,10 @@ export function Capabilities() {
                     <span className="inline-flex size-11 items-center justify-center rounded-input border border-accent/20 bg-accent/10 text-accent-secondary">
                       <Icon className="size-5" aria-hidden />
                     </span>
-                    <h3 className="font-heading text-lg font-bold tracking-tight text-foreground sm:text-xl">
+                    <h3 className="font-heading text-xl font-bold tracking-tight text-foreground sm:text-2xl">
                       {service.title}
                     </h3>
-                    <p className="text-pretty text-sm leading-relaxed text-foreground-muted">
+                    <p className="text-pretty text-base leading-relaxed text-foreground-muted">
                       {service.description}
                     </p>
                   </div>
