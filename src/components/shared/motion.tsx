@@ -25,7 +25,10 @@ type MotionTag =
   | "figure";
 
 type LooseMotionComponent = React.ComponentType<
-  Record<string, unknown> & { children?: React.ReactNode }
+  Record<string, unknown> & {
+    children?: React.ReactNode;
+    ref?: React.Ref<HTMLElement>;
+  }
 >;
 
 const motionTag = (tag: MotionTag) =>
@@ -33,6 +36,58 @@ const motionTag = (tag: MotionTag) =>
 
 /** Marks reveal wrappers so a `<noscript>` rule can force them visible. */
 const REVEAL_CLASS = "js-reveal";
+
+/**
+ * First-party replacement for Framer Motion's own `whileInView` viewport
+ * tracking. `whileInView` schedules its "now visible" transition through the
+ * library's internal observer/scheduling, which this codebase saw fail to
+ * fire promptly in a real browser (reported: content sitting at its
+ * `initial`, invisible state for several seconds after genuinely scrolling
+ * into view) — reproducible on that machine across a hard refresh and an
+ * Incognito window (so not cache, not an extension), but never reproducible
+ * here across headless Chromium, dev/production, or a realistic scroll
+ * gesture. Rather than keep guessing at a third-party library's internal
+ * timing, this hook owns the signal directly with the browser's own
+ * `IntersectionObserver`, the same instinct behind `hero.tsx`'s
+ * `video.ended` listener: don't trust a single opaque event to always fire
+ * on time when a page needs to reliably become visible.
+ */
+function useInView(
+  ref: React.RefObject<Element | null>,
+  { once = true, amount = 0.15, margin = "0px 0px -60px 0px" }: { once?: boolean; amount?: number; margin?: string },
+) {
+  const [inView, setInView] = React.useState(false);
+
+  React.useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    // Already on screen at mount (e.g. above the fold, or a short page) —
+    // an observer only fires on a later intersection *change*, so this
+    // covers the case where the element starts out already intersecting.
+    const rect = node.getBoundingClientRect();
+    const startsInView =
+      rect.top < window.innerHeight && rect.bottom > 0 && rect.left < window.innerWidth && rect.right > 0;
+    if (startsInView) setInView(true);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          if (once) observer.disconnect();
+        } else if (!once) {
+          setInView(false);
+        }
+      },
+      { threshold: amount, rootMargin: margin },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [ref, once, amount, margin]);
+
+  return inView;
+}
 
 type FadeInProps = MotionSafeProps & {
   delay?: number;
@@ -54,6 +109,8 @@ export function FadeIn({
 }: FadeInProps) {
   const reduceMotion = useMotionPreference();
   const Comp = motionTag(as);
+  const ref = React.useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once, amount: 0.2, margin: "0px 0px -80px 0px" });
 
   // Reduced motion renders static: no offset, no transition, no reveal.
   if (reduceMotion) {
@@ -66,10 +123,10 @@ export function FadeIn({
 
   return (
     <Comp
+      ref={ref}
       className={cn(REVEAL_CLASS, className)}
       initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount: 0.2, margin: "0px 0px -80px 0px" }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y }}
       transition={{ duration, delay, ease: EASE }}
       {...props}
     >
@@ -103,6 +160,8 @@ export function Rise({
 }: RiseProps) {
   const reduceMotion = useMotionPreference();
   const Comp = motionTag(as);
+  const ref = React.useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once, amount: 0.3, margin: "0px 0px -80px 0px" });
 
   if (reduceMotion) {
     return (
@@ -114,10 +173,10 @@ export function Rise({
 
   return (
     <Comp
+      ref={ref}
       className={cn(REVEAL_CLASS, className)}
       initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount: 0.3, margin: "0px 0px -80px 0px" }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y }}
       transition={{ ...SPRING, delay }}
       {...props}
     >
@@ -145,6 +204,8 @@ export function Settle({
 }: SettleProps) {
   const reduceMotion = useMotionPreference();
   const Comp = motionTag(as);
+  const ref = React.useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once, amount: 0.2, margin: "0px 0px -80px 0px" });
 
   if (reduceMotion) {
     return (
@@ -156,10 +217,10 @@ export function Settle({
 
   return (
     <Comp
+      ref={ref}
       className={cn(REVEAL_CLASS, className)}
       initial={{ opacity: 0, scale: 0.98 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once, amount: 0.2, margin: "0px 0px -80px 0px" }}
+      animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }}
       transition={{ duration, delay, ease: EASE }}
       {...props}
     >
@@ -193,6 +254,8 @@ export function Sweep({
 }: SweepProps) {
   const reduceMotion = useMotionPreference();
   const Comp = motionTag(as);
+  const ref = React.useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once, amount: 0.15, margin: "0px 0px -60px 0px" });
 
   if (reduceMotion) {
     return (
@@ -204,11 +267,11 @@ export function Sweep({
 
   return (
     <Comp
+      ref={ref}
       className={cn(className)}
       variants={staggerContainer}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once, amount: 0.15, margin: "0px 0px -60px 0px" }}
+      animate={inView ? "visible" : "hidden"}
       {...props}
     >
       {children}
@@ -269,6 +332,8 @@ export function Stagger({
 }: StaggerProps) {
   const reduceMotion = useMotionPreference();
   const Comp = motionTag(as);
+  const ref = React.useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once, amount: 0.15, margin: "0px 0px -60px 0px" });
 
   // Skip the orchestration entirely so children do not appear sequentially.
   if (reduceMotion) {
@@ -281,11 +346,11 @@ export function Stagger({
 
   return (
     <Comp
+      ref={ref}
       className={cn(className)}
       variants={staggerContainer}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once, amount: 0.15, margin: "0px 0px -60px 0px" }}
+      animate={inView ? "visible" : "hidden"}
       {...props}
     >
       {children}

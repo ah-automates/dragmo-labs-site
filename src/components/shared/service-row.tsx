@@ -103,7 +103,7 @@ export function ServiceRow({
         {photo && (
           <div
             className={cn(
-              "relative aspect-[4/3] w-full overflow-hidden rounded-card border border-border",
+              "relative aspect-video w-full overflow-hidden rounded-card border border-border",
               reverse && "lg:order-1",
             )}
           >
@@ -113,6 +113,7 @@ export function ServiceRow({
               fill
               sizes="(min-width: 1024px) 26rem, 100vw"
               loading="lazy"
+              quality={90}
               className="img-brand-tint object-cover transition-transform duration-500 group-hover:scale-[1.04]"
             />
             <span aria-hidden className="absolute inset-0 bg-accent/8 mix-blend-overlay" />

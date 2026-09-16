@@ -257,10 +257,10 @@ const voiceAgent: Product = {
         kind: "video",
         src: "/videos/dragvo-demo.mp4",
         poster: {
-          src: "/images/dragvo-poster.jpg",
-          width: 1280,
-          height: 720,
-          alt: "A Notion database with two lead rows already filled in by the AI voice agent during real calls, including names, purpose, and timeline",
+          src: "/images/voice-agent-showcase-poster.jpg",
+          width: 1672,
+          height: 941,
+          alt: "A phone screen mid-call with a real estate agency, with a Lead Captured confirmation beside it",
         },
         durationLabel: "A real inbound call, recorded in full",
         captionSummary:
@@ -450,10 +450,10 @@ const whatsappAgent: Product = {
         kind: "video",
         src: "/videos/dragw-demo.mp4",
         poster: {
-          src: "/images/dragw-poster.jpg",
-          width: 1280,
-          height: 720,
-          alt: "A completed WhatsApp conversation showing the AI agent's full reply, a fully checked qualification list, and a Request #1 sent confirmation badge",
+          src: "/images/whatsapp-agent-showcase-poster.jpg",
+          width: 1672,
+          height: 941,
+          alt: "A WhatsApp conversation with a real estate lead being qualified on location and budget, next to a skyline of illuminated properties",
         },
         durationLabel: "A real conversation, recorded in full",
         captionSummary:

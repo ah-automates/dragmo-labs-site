@@ -147,6 +147,7 @@ function ServiceHero({ service, ctaLabel }: { service: Service; ctaLabel: string
                 fill
                 priority
                 sizes="(min-width: 1024px) 32rem, 100vw"
+                quality={90}
                 className="img-brand-tint object-cover"
               />
               <span aria-hidden className="absolute inset-0 bg-accent/8 mix-blend-overlay" />
