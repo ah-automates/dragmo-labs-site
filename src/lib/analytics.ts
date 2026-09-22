@@ -103,7 +103,19 @@ export function setStoredConsent(choice: ConsentChoice): void {
     // As above — the choice still applies for this page load via the consent
     // update call; it just will not be remembered next visit.
   }
+  // Broadcast regardless of whether the write above succeeded — the choice
+  // still governs this page load. Other trackers (e.g. `meta-pixel.tsx`) that
+  // have no gtag equivalent of `updateConsent` listen for this instead of
+  // polling localStorage.
+  window.dispatchEvent(new CustomEvent(CONSENT_UPDATED_EVENT, { detail: choice }));
 }
+
+/**
+ * Fired by `setStoredConsent` whenever the visitor's choice changes. Lets a
+ * tracker with no dataLayer/consent-mode equivalent of its own (Meta Pixel)
+ * start or stop without polling `getStoredConsent()`.
+ */
+export const CONSENT_UPDATED_EVENT = "dl:consent-updated";
 
 /**
  * Tell gtag the visitor's decision. This site runs no ad products, so only

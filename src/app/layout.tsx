@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 
 import { A11yMenu } from "@/components/a11y/a11y-menu";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
+import { MetaPixel } from "@/components/analytics/meta-pixel";
 import { CookieConsentBanner } from "@/components/analytics/cookie-consent-banner";
 import { A11yProvider } from "@/components/a11y/a11y-provider";
 import { Navbar } from "@/components/layout/navbar";
@@ -110,6 +111,7 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <GoogleAnalytics />
+        <MetaPixel />
         <CookieConsentBanner />
         <A11yProvider>
           <a
