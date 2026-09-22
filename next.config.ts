@@ -14,6 +14,16 @@ const GA_CONNECT_SRC =
   "https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com";
 const GA_IMG_SRC = "https://*.google-analytics.com https://www.googletagmanager.com";
 
+/**
+ * Meta Pixel. `fbevents.js` itself is fetched from `connect.facebook.net`;
+ * once loaded it reports events via a `fetch`/`sendBeacon` call to
+ * `www.facebook.com/tr`, and the `<noscript>` fallback in `meta-pixel.tsx`
+ * hits that same path as a plain `<img>` beacon.
+ */
+const META_PIXEL_SCRIPT_SRC = "https://connect.facebook.net";
+const META_PIXEL_CONNECT_SRC = "https://www.facebook.com https://connect.facebook.net";
+const META_PIXEL_IMG_SRC = "https://www.facebook.com";
+
 const IS_DEV = process.env.NODE_ENV !== "production";
 
 /**
@@ -43,13 +53,13 @@ const DEV_CONNECT_SRC = IS_DEV ? " ws: wss:" : "";
  */
 const CSP = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' ${TURNSTILE} ${GA_SCRIPT_SRC}${DEV_SCRIPT_SRC}`,
+  `script-src 'self' 'unsafe-inline' ${TURNSTILE} ${GA_SCRIPT_SRC} ${META_PIXEL_SCRIPT_SRC}${DEV_SCRIPT_SRC}`,
   // Tailwind and next/font both emit inline <style> blocks.
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: blob: ${GA_IMG_SRC}`,
+  `img-src 'self' data: blob: ${GA_IMG_SRC} ${META_PIXEL_IMG_SRC}`,
   "font-src 'self' data:",
   "media-src 'self'",
-  `connect-src 'self' ${TURNSTILE} ${GA_CONNECT_SRC}${DEV_CONNECT_SRC}`,
+  `connect-src 'self' ${TURNSTILE} ${GA_CONNECT_SRC} ${META_PIXEL_CONNECT_SRC}${DEV_CONNECT_SRC}`,
   `frame-src ${TURNSTILE}`,
   "object-src 'none'",
   "base-uri 'self'",
