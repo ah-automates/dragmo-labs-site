@@ -51,6 +51,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.7,
     },
+    {
+      url: `${siteConfig.url}/about`,
+      changeFrequency: "yearly",
+      priority: 0.6,
+    },
+    {
+      url: `${siteConfig.url}/faq`,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
     // Testimonials live at `/#testimonials` on the home page, already
     // covered by the root URL above — a fragment is not a separate page to
     // list here; see `testimonials.ts`.

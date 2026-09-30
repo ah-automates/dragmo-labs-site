@@ -6,6 +6,7 @@ import { Container, Section } from "@/components/shared/container";
 import { FadeIn, Rise, Settle, Stagger, StaggerChild } from "@/components/shared/motion";
 import { SectionOpener } from "@/components/shared/section-opener";
 import { ClosingBand } from "@/components/shared/closing-band";
+import { FaqSection } from "@/components/shared/faq-section";
 import { ButtonLink } from "@/components/ui/button";
 import { CaseStudyCard } from "@/components/case-study/case-study-card";
 import { ProductSummaryCard } from "@/components/product/product-summary-card";
@@ -39,14 +40,18 @@ export function ServiceDocument({ service }: { service: Service }) {
       <ServiceCostFactors service={service} />
       <ServiceEngagement service={service} />
       <ServiceProof service={service} />
+      <FaqSection faq={service.faq} />
       <ClosingBand
         title={detail.closing.title}
         description={detail.closing.description}
         primary={{ label: ctaLabel, href: "/contact" }}
-        // §5 and this band share `bg-background` when proof rendered above
-        // it; when proof is `null`, §4's `background-secondary` already
-        // supplies the seam, so no extra rule is needed there.
-        className={detail.proof ? "border-t border-border" : undefined}
+        // §5 and this band share `bg-background` when proof renders directly
+        // above it with nothing between them. `FaqSection` always carries its
+        // own `border-t` and switches to `background-secondary`, so once it
+        // renders it already supplies the seam and the band needs no extra
+        // rule; same when proof is `null` and §4's `background-secondary`
+        // borders the band directly.
+        className={detail.proof && !service.faq?.length ? "border-t border-border" : undefined}
       />
     </>
   );

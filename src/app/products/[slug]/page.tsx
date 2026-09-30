@@ -3,8 +3,10 @@ import { notFound } from "next/navigation";
 
 import { ProductSalesPage } from "@/components/product/sales-page";
 import { ProductShowcasePage } from "@/components/product/showcase-page";
+import { JsonLd } from "@/components/seo/json-ld";
 import { products, productsBySlug, type Product } from "@/lib/products";
 import { siteConfig } from "@/lib/data";
+import { breadcrumbSchema, faqPageSchema, graph, productSchema } from "@/lib/schema";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -50,9 +52,21 @@ export default async function ProductPage({ params }: PageProps) {
   const product = productsBySlug[slug as Product["slug"]];
   if (!product) notFound();
 
-  return product.offer.kind === "full-offer" ? (
-    <ProductSalesPage product={product} />
-  ) : (
-    <ProductShowcasePage product={product} />
+  const breadcrumbs = breadcrumbSchema([
+    { name: "Home", url: siteConfig.url },
+    { name: "Products", url: `${siteConfig.url}/products` },
+    { name: product.name, url: `${siteConfig.url}/products/${product.slug}` },
+  ]);
+  const faq = product.faq ? faqPageSchema(product.faq) : null;
+
+  return (
+    <>
+      <JsonLd data={graph(productSchema(product), breadcrumbs, faq)} />
+      {product.offer.kind === "full-offer" ? (
+        <ProductSalesPage product={product} />
+      ) : (
+        <ProductShowcasePage product={product} />
+      )}
+    </>
   );
 }

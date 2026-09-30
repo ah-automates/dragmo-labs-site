@@ -1,6 +1,7 @@
 import type { IconName } from "@/lib/icons";
 import type { ProofEntry } from "@/lib/proof";
 import { proofBySlug } from "@/lib/proof";
+import type { FaqEntry } from "@/lib/faq";
 
 /**
  * Product pages, structured on Sabri Suby's 17-Step Secret Selling System
@@ -155,6 +156,25 @@ export type Product = {
    * to `name`/`summary`, so most products need nothing here.
    */
   seo?: { title?: string; description?: string };
+  /**
+   * Answers to real questions this product's own copy already establishes
+   * elsewhere — never a new claim invented for the FAQ. Optional: most
+   * products need nothing here until a real recurring question shows up.
+   * Renders as visible `<details>` text and feeds `FAQPage` structured data,
+   * which is how a search engine or an AI assistant extracts a direct answer
+   * (e.g. "does the WhatsApp agent support human takeover") without having
+   * to infer it from marketing prose.
+   */
+  faq?: readonly FaqEntry[];
+  /**
+   * Which Schema.org type represents this product in structured data
+   * (`src/lib/schema.ts`): `"software"` for a running application
+   * (`SoftwareApplication`), `"service"` for a delivered build with no
+   * standalone app to point at, like the 3D Property Website (`Service`,
+   * matching how `services.ts` describes a delivered engagement). The data
+   * decides, so `schema.ts` never switches on a hardcoded slug list.
+   */
+  schemaKind: "software" | "service";
   offer: ProductOffer;
 };
 
@@ -179,6 +199,7 @@ const CALL_TO_ACTION_INTRO =
 
 const voiceAgent: Product = {
   slug: "voice-agent",
+  schemaKind: "software",
   name: "AI Voice Agent for Real Estate",
   codename: "DragVo",
   dreamBuyer: "Real estate agencies whose phone rings after the desk has emptied out.",
@@ -201,6 +222,28 @@ const voiceAgent: Product = {
     description:
       "An AI receptionist that answers your business phone line, qualifies the caller, and logs a ready-to-work lead before you have even seen a missed call notification.",
   },
+  faq: [
+    {
+      question: "Does the AI voice agent answer calls outside business hours?",
+      answer:
+        "Yes. It answers every inbound call, any hour, any day, so nothing goes to voicemail or rings out after the office closes.",
+    },
+    {
+      question: "Can it talk about our actual property listings, or does it just take a message?",
+      answer:
+        "It talks about your real inventory, off plan launches, current inventory, and resale, the way a well briefed agent would, not a script reading a menu of options.",
+    },
+    {
+      question: "Does it qualify the caller, or just log a name and number?",
+      answer:
+        "It qualifies the caller conversationally and reads their phone number back digit by digit to confirm it, so you get a lead with purpose, budget, and timeline already gathered, not just a name.",
+    },
+    {
+      question: "How fast does a lead reach my team after the call ends?",
+      answer:
+        "The lead logs the instant the call ends, so your team can follow up while the caller's interest is still at its peak, not the next morning.",
+    },
+  ],
   offer: {
     kind: "full-offer",
     calloutAudience: "For Real Estate Agencies Losing Calls After Hours",
@@ -375,6 +418,7 @@ const voiceAgent: Product = {
 
 const whatsappAgent: Product = {
   slug: "whatsapp-agent",
+  schemaKind: "software",
   name: "AI WhatsApp Agent for Real Estate",
   codename: "DragW",
   dreamBuyer: "Real estate agencies drowning in WhatsApp enquiries their own team cannot keep up with.",
@@ -395,8 +439,34 @@ const whatsappAgent: Product = {
   seo: {
     title: "AI WhatsApp Agent & Chatbot For Real Estate Lead Qualification",
     description:
-      "An AI WhatsApp agent and chatbot that answers every inbound message, including voice notes and images, qualifies the buyer, and hands your team a lead they can act on in minutes.",
+      "An AI WhatsApp agent and chatbot that answers every inbound message, including voice notes and images, qualifies the buyer, supports human takeover, and hands your team a lead they can act on in minutes.",
   },
+  // Each answer restates a claim the page already makes elsewhere (solution
+  // paragraphs, benefits rows, the video caption) in the plain words a buyer
+  // actually searches, rather than adding anything new. See the FAQ doc
+  // comment on `Product` for why this exists.
+  faq: [
+    {
+      question: "Can a human take over a WhatsApp AI conversation?",
+      answer:
+        "Yes. The Detach control lets your team take over any single conversation by hand, WhatsApp Desktop style, at any moment. This is a full human takeover: the AI stays silent on that contact until your team hands it back.",
+    },
+    {
+      question: "Can the AI be paused and resumed after a human takes over?",
+      answer:
+        "Yes. Detaching a conversation pauses the AI for that one contact only. When your team hands it back, the AI resumes without losing the thread of what was said while a human was in control.",
+    },
+    {
+      question: "Does the WhatsApp agent qualify real estate leads?",
+      answer:
+        "Yes. It asks the qualifying questions a good agent would ask, one at a time, in order, gathering area, bedrooms, budget, furnished preference, and move in date before a lead is logged.",
+    },
+    {
+      question: "Does it understand voice notes and images, not just text?",
+      answer:
+        "Yes. It reads text, voice notes, and images the same way, so a buyer who sends a voice note gets answered exactly like one who typed.",
+    },
+  ],
   offer: {
     kind: "full-offer",
     calloutAudience: "For Real Estate Agencies Drowning In WhatsApp Enquiries",
@@ -442,7 +512,7 @@ const whatsappAgent: Product = {
       heading: "An Agent That Actually Converses, Not A Bot That Matches Keywords",
       paragraphs: [
         "This is a real conversational AI agent, not a rules based chatbot and not an automation platform bolted onto WhatsApp. It reads your actual property data, asks the qualifying questions a good agent would ask, and only pulls in a human when a human is genuinely needed.",
-        "And when a human is needed, your team can detach the AI for that one conversation, WhatsApp Desktop style, take over by hand, and hand it back later without the AI losing the thread of what was said while they were in control.",
+        "And when a human is needed, your team can trigger a human takeover: detach the AI for that one conversation, WhatsApp Desktop style, take over by hand, and hand it back later without the AI losing the thread of what was said while they were in control.",
       ],
       categoricalDifference:
         "Zapier, Make, and n8n move a message from one app to another. They do not know what a 3 bedroom apartment in Dubai Hills rents for, and they cannot ask a follow up question in response to what a buyer just said. This does both, from your own knowledge base, in a real back and forth conversation.",
@@ -457,7 +527,7 @@ const whatsappAgent: Product = {
         },
         durationLabel: "A real conversation, recorded in full",
         captionSummary:
-          "A chat list stacked with unanswered buyer questions. A caller asks about a 3 bed in Dubai Hills for rent, and the agent answers instantly with a real listing and a real price. It gathers area, bedrooms, budget, furnished preference, and move in date one field at a time, each shown checked off as it is collected, then logs a new rental request. The agent is shown next to every off the shelf automation tool it replaces, then the owner's own Detach control, letting a human take over any single conversation instantly. Closes on: AI when you want it, you, when it matters.",
+          "A chat list stacked with unanswered buyer questions. A caller asks about a 3 bed in Dubai Hills for rent, and the agent answers instantly with a real listing and a real price. It gathers area, bedrooms, budget, furnished preference, and move in date one field at a time, each shown checked off as it is collected, then logs a new rental request. The agent is shown next to every off the shelf automation tool it replaces, then the owner's own Detach control for a human takeover, letting a human take over any single conversation instantly and hand it back to the AI later. Closes on: AI when you want it, you, when it matters.",
       },
     },
     credentials: {
@@ -491,8 +561,8 @@ const whatsappAgent: Product = {
           benefit: "A revised budget or area updates the lead cleanly instead of creating a confused duplicate.",
         },
         {
-          feature: "Detach control per conversation",
-          benefit: "Your team takes over any single chat by hand, instantly, without losing the AI's memory of it.",
+          feature: "Human takeover (Detach) on any conversation",
+          benefit: "Your team takes over any single chat by hand for a full human handoff, instantly, without losing the AI's memory of it, then hands it back to the AI when they are done.",
         },
         {
           feature: "Live web inbox with full conversation history",
@@ -568,6 +638,7 @@ const whatsappAgent: Product = {
 
 const threeDPropertyWebsite: Product = {
   slug: "3d-property-website",
+  schemaKind: "service",
   name: "3D Property Website for Real Estate",
   dreamBuyer: "Real estate agencies whose website still reads like a printed brochure.",
   shortLabel: "3D Property Website",
@@ -589,6 +660,28 @@ const threeDPropertyWebsite: Product = {
     description:
       "A scroll-driven, cinematic property website that moves a visitor through a listing the way walking through the front door would, not a grid of thumbnails.",
   },
+  faq: [
+    {
+      question: "Is the 3D property website a real, live site we can use today?",
+      answer:
+        "The build itself is real and works exactly as shown in the demo, but it is not live to the public. It has no backend, and the listings and phone number shown are placeholders.",
+    },
+    {
+      question: "How is this different from a normal real estate website with photo galleries?",
+      answer:
+        "Scrolling itself becomes the camera move, pushing a visitor from the water, through the front door, and up into a skyline view, instead of a static gallery a visitor clicks through on their own.",
+    },
+    {
+      question: "Can we get this for our own brand and listings?",
+      answer:
+        "Yes, either free as a template alongside either AI agent product, or as a custom build with your own brand and listings, which we will scope honestly on a call.",
+    },
+    {
+      question: "Does it support real pricing and multiple properties, or just one flagship listing?",
+      answer:
+        "Yes. Once the opening scroll sequence releases, it moves into selected properties with real pricing, an advantages section, area guides, off plan listings, and a valuation form.",
+    },
+  ],
   offer: {
     kind: "showcase",
     calloutAudience: "For Agencies Selling Properties Worth Walking Through",
@@ -673,6 +766,7 @@ const threeDPropertyWebsite: Product = {
 
 const aiInvoiceSystem: Product = {
   slug: "ai-invoice-system",
+  schemaKind: "software",
   name: "AI Invoice System",
   dreamBuyer: "Any business still typing out the same invoice template by hand, every single time.",
   shortLabel: "AI Invoice System",
@@ -694,6 +788,28 @@ const aiInvoiceSystem: Product = {
     description:
       "A custom accounts payable automation system that reads a vendor invoice, checks its own arithmetic before anyone trusts it, and builds your client invoices from one fixed, branded template.",
   },
+  faq: [
+    {
+      question: "Does it just read invoices, or does it check the numbers too?",
+      answer:
+        "It reads every field into a structured record, then independently re-verifies the line totals, tax, and grand total before anything is trusted, and flags what does not add up for a human to check.",
+    },
+    {
+      question: "Can we still type an invoice in by hand if that is faster?",
+      answer:
+        "Yes. You can upload a vendor invoice for the system to read, or type it in directly when that is faster for a particular bill.",
+    },
+    {
+      question: "What happens to an invoice once it has already been sent to a client?",
+      answer:
+        "Its template is frozen the moment it is sent, so a later template change can never silently rewrite a document a client has already relied on.",
+    },
+    {
+      question: "How quickly does revoking a team member's access take effect?",
+      answer:
+        "Immediately, on their very next request, since sessions are database backed rather than token based with a delayed expiry.",
+    },
+  ],
   offer: {
     kind: "full-offer",
     calloutAudience: "For Any Business Still Retyping Invoices By Hand",

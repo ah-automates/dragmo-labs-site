@@ -5,6 +5,7 @@ import { ProductSolution } from "@/components/product/sections/solution";
 import { ProductOfferPanel } from "@/components/product/sections/offer";
 import { ProductCallToAction } from "@/components/product/sections/call-to-action";
 import { ProductPostscript } from "@/components/product/sections/postscript";
+import { FaqSection } from "@/components/shared/faq-section";
 import type { Product } from "@/lib/products";
 
 /**
@@ -23,6 +24,7 @@ export function ProductShowcasePage({ product }: { product: Product }) {
       <ProductProblem product={product} />
       <ProductSolution product={product} />
       <ProductOfferPanel product={product} />
+      <FaqSection faq={product.faq} />
       <ProductCallToAction product={product} />
       <ProductPostscript product={product} />
     </>

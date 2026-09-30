@@ -1,4 +1,5 @@
 import type { ImageId } from "@/lib/images";
+import type { FaqEntry } from "@/lib/faq";
 // Type-only imports: `services.ts` has zero runtime edge to either module,
 // so importing `services` (as `footer.tsx` and `nav.ts` both do) never pulls
 // case-study or product copy into a bundle that only needed a slug. See
@@ -100,6 +101,10 @@ export type Service = {
    *  A service with neither gets the photo-less hero (see
    *  `design-system/pages/service.md` §3). */
   poster?: { src: string; alt: string };
+  /** Same shape and same rule as `Product.faq`: only a question this
+   *  service's own copy already answers elsewhere. Optional — most services
+   *  need nothing here. */
+  faq?: readonly FaqEntry[];
   detail: ServiceDetail;
 };
 
@@ -112,6 +117,28 @@ export const services: Service[] = [
       "Custom models and LLM-powered features trained on your data, your workflows, and your commercial goals rather than a generic template.",
     seo: { title: "Custom AI Solutions & Development" },
     image: "capabilityAi",
+    faq: [
+      {
+        question: "Will the AI be trained on our own data, or a generic model?",
+        answer:
+          "It is configured against your own data and workflows, so answers reflect your actual business rather than a generic training set.",
+      },
+      {
+        question: "Does the AI know when to hand a conversation to a person?",
+        answer:
+          "Yes. The agents are built to hold a real conversation, ask follow-up questions, and know when to hand off to a person, on the channel your customers already use.",
+      },
+      {
+        question: "Who owns the system once it is live?",
+        answer:
+          "You do. We hand over the code, the data pipelines, and documentation, and stay available for the tuning that real usage surfaces.",
+      },
+      {
+        question: "How do you make sure the system does not fail on edge cases?",
+        answer:
+          "We test against real conversations and edge cases before launch, with monitoring in place so drift and failure modes get caught, not discovered by a customer.",
+      },
+    ],
     detail: {
       eyebrow: "Custom AI Systems",
       headline: "AI Systems Trained On Your Own Data",
@@ -206,6 +233,28 @@ export const services: Service[] = [
         "AI automation services that connect the tools you already run and remove the manual handoffs between them, so you scale volume without scaling headcount.",
     },
     image: "capabilityAutomation",
+    faq: [
+      {
+        question: "What kind of workflow is worth automating first?",
+        answer:
+          "We start with the workflow that costs the most hours today and automate the steps that are genuinely repetitive, not the ones that only look that way.",
+      },
+      {
+        question: "Will we be able to see the automation actually running?",
+        answer:
+          "Yes. It ships behind an operational dashboard, so your team can see the workflow running rather than trusting it blindly.",
+      },
+      {
+        question: "What stops a wrong number or a missing field from reaching a client?",
+        answer:
+          "Verification checks are built into the workflow itself at every point data changes hands, so mistakes get caught before they reach a client.",
+      },
+      {
+        question: "Can automation replace hiring for repetitive work?",
+        answer:
+          "In workflows where the added work is repetitive rather than judgment calls, a connected system can absorb volume that would otherwise mean growing headcount.",
+      },
+    ],
     detail: {
       eyebrow: "Workflow Automation",
       headline: "Automation That Removes The Manual Handoffs",
@@ -289,6 +338,26 @@ export const services: Service[] = [
     description:
       "Fast, accessible sites built on modern infrastructure and engineered to turn traffic into qualified pipeline.",
     image: "serviceWeb",
+    faq: [
+      {
+        question: "Do you design before writing code, or build directly?",
+        answer:
+          "Every page is designed and approved before development starts, so you see the site before it exists and there are no surprises at launch.",
+      },
+      {
+        question: "Who owns the site and where is it hosted?",
+        answer: "You own the codebase outright, hosted on infrastructure you control.",
+      },
+      {
+        question: "Can you tell which pages are actually bringing in enquiries?",
+        answer:
+          "Yes. Analytics are set up on the pages and actions that matter, so you can see which pages are earning enquiries and which are not.",
+      },
+      {
+        question: "What happens after the site launches?",
+        answer: "We remain available for the changes a live site always needs.",
+      },
+    ],
     detail: {
       eyebrow: "Website Design",
       headline: "Websites Built To Convert Your Traffic",
@@ -379,6 +448,28 @@ export const services: Service[] = [
         "Custom web application development for the processes no off-the-shelf product covers, on scalable architecture that integrates with the data infrastructure you already have.",
     },
     image: "serviceApps",
+    faq: [
+      {
+        question: "What if no off-the-shelf software does exactly what we need?",
+        answer:
+          "That is exactly what this service is for: bespoke applications built around your actual process, with direct integrations into the systems you already run.",
+      },
+      {
+        question: "How is pricing worked out for a custom application?",
+        answer:
+          "We quote after a short scoping conversation, not from a rate card, since scope, integration count, data migration, and timeline are what actually move the number.",
+      },
+      {
+        question: "Will the application handle growth, or need a rewrite later?",
+        answer:
+          "It is built on scalable architecture sized for where you are headed, not just your current volume, so it can handle more users and data without a rewrite.",
+      },
+      {
+        question: "Do we get full access and documentation at the end?",
+        answer:
+          "Yes, you receive the full codebase and documentation clear enough for any team to maintain it, not only the one that built it.",
+      },
+    ],
     detail: {
       eyebrow: "Bespoke Software",
       headline: "Bespoke Software For Your Exact Process",
@@ -486,6 +577,28 @@ export const services: Service[] = [
       "Interfaces grounded in real user research, with the hierarchy and polish that earn trust on first view.",
     seo: { title: "UI/UX Design Services" },
     image: "serviceDesign",
+    faq: [
+      {
+        question: "Is the design based on real user research, or best guesses?",
+        answer:
+          "It is grounded in real sessions with real users, so decisions are based on how people actually use the product, not assumptions.",
+      },
+      {
+        question: "What do we actually receive at the end of the engagement?",
+        answer:
+          "Full design file access and documentation, plus a reusable component system your team can extend without coming back to us for every new screen.",
+      },
+      {
+        question: "How is design pricing determined?",
+        answer:
+          "We quote after a short scoping conversation. The number of screens, research depth, design system scope, and existing brand work are what actually move it.",
+      },
+      {
+        question: "Do you have standalone design work we can see?",
+        answer:
+          "Our design work today is inseparable from the sites and systems we have built, like Purafall's website and the 3D Property Website. We do not yet have a design-only engagement to point to on its own.",
+      },
+    ],
     detail: {
       eyebrow: "Interface Design",
       headline: "Interfaces Built On Research, Not Guesswork",
@@ -606,6 +719,28 @@ export const services: Service[] = [
       src: "/images/ai-consultation-card.jpg",
       alt: "A single lit decision path rising above dimmed branching alternatives toward a search, checklist, and balance-scale icon, over a circuit board",
     },
+    faq: [
+      {
+        question: "What do we actually get at the end of an assessment?",
+        answer:
+          "A written report with a prioritized roadmap ranking every viable AI opportunity by effort against impact, plus a clear build-or-buy recommendation for each one.",
+      },
+      {
+        question: "Is the roadmap ours to use even if we do not build with you?",
+        answer:
+          "Yes. You receive the full report and roadmap regardless of what you decide to build next, and it is yours to act on with us or any team you choose.",
+      },
+      {
+        question: "How do you actually determine where AI would help, versus just pitching it everywhere?",
+        answer:
+          "We examine your actual workflows, data, and systems firsthand rather than working from a questionnaire, so the roadmap reflects your business, not a generic AI opportunity list.",
+      },
+      {
+        question: "Do you have consulting-only engagements you can point to?",
+        answer:
+          "Every client relationship so far started from a defined build rather than a standalone assessment, so we do not have a consulting-only engagement to point to yet. What we can show is the build work itself.",
+      },
+    ],
     detail: {
       eyebrow: "AI Strategy",
       headline: "Know What Is Worth Building First",

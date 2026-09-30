@@ -21,6 +21,7 @@ export type NavLink = { label: string; href: string; children?: NavChild[] };
 export function buildSiteMenu(): NavLink[] {
   return [
     { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
     {
       label: "Services",
       href: "/services",
@@ -45,5 +46,6 @@ export function buildSiteMenu(): NavLink[] {
         ...caseStudies.map((study) => ({ label: study.client, href: `/case-studies/${study.slug}` })),
       ],
     },
+    { label: "FAQ", href: "/faq" },
   ];
 }

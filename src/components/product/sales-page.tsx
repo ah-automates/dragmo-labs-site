@@ -8,6 +8,7 @@ import { ProductSocialProof } from "@/components/product/sections/social-proof";
 import { ProductOfferPanel } from "@/components/product/sections/offer";
 import { ProductCallToAction } from "@/components/product/sections/call-to-action";
 import { ProductPostscript } from "@/components/product/sections/postscript";
+import { FaqSection } from "@/components/shared/faq-section";
 import type { Product } from "@/lib/products";
 
 /**
@@ -16,6 +17,10 @@ import type { Product } from "@/lib/products";
  * order is the argument, so the sections are never reordered per product.
  * See `design-system/pages/product.md` for how the 17 steps map to these 10
  * sections without any two sharing a layout family.
+ *
+ * The FAQ is not one of the 17 steps and sits outside that count: it slots
+ * between the offer panel and the close, where objection-handling belongs,
+ * and renders nothing for a product with no `faq` entries.
  */
 export function ProductSalesPage({ product }: { product: Product }) {
   return (
@@ -28,6 +33,7 @@ export function ProductSalesPage({ product }: { product: Product }) {
       <ProductBenefits product={product} />
       <ProductSocialProof product={product} />
       <ProductOfferPanel product={product} />
+      <FaqSection faq={product.faq} />
       <ProductCallToAction product={product} />
       <ProductPostscript product={product} />
     </>

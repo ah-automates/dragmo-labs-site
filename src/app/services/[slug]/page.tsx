@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ServiceDocument } from "@/components/service/service-document";
+import { JsonLd } from "@/components/seo/json-ld";
 import { services, servicesBySlug, type Service, type ServiceSlug } from "@/lib/services";
 import { siteConfig } from "@/lib/data";
+import { breadcrumbSchema, faqPageSchema, graph, serviceSchema } from "@/lib/schema";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -48,5 +50,17 @@ export default async function ServicePage({ params }: PageProps) {
   const service = servicesBySlug[slug as ServiceSlug];
   if (!service) notFound();
 
-  return <ServiceDocument service={service} />;
+  const breadcrumbs = breadcrumbSchema([
+    { name: "Home", url: siteConfig.url },
+    { name: "Services", url: `${siteConfig.url}/services` },
+    { name: service.title, url: `${siteConfig.url}/services/${service.slug}` },
+  ]);
+  const faq = service.faq ? faqPageSchema(service.faq) : null;
+
+  return (
+    <>
+      <JsonLd data={graph(serviceSchema(service), breadcrumbs, faq)} />
+      <ServiceDocument service={service} />
+    </>
+  );
 }

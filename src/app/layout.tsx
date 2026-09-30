@@ -9,9 +9,11 @@ import { CookieConsentBanner } from "@/components/analytics/cookie-consent-banne
 import { A11yProvider } from "@/components/a11y/a11y-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { JsonLd } from "@/components/seo/json-ld";
 import { A11Y_INIT_SCRIPT } from "@/lib/a11y";
 import { siteConfig } from "@/lib/data";
 import { buildSiteMenu } from "@/lib/nav";
+import { graph, organizationSchema, websiteSchema } from "@/lib/schema";
 
 import "./globals.css";
 
@@ -108,6 +110,11 @@ export default function RootLayout({
         {/* Applies a stored accessibility preference before first paint, so the
             page never renders once at the wrong size or contrast. */}
         <script dangerouslySetInnerHTML={{ __html: A11Y_INIT_SCRIPT }} />
+        {/* Organization + WebSite, defined once here. Every other page's
+            JSON-LD references these by `@id` instead of redeclaring them, so
+            a crawler that merges by `@id` resolves the whole site as one
+            entity graph. See `src/lib/schema.ts`. */}
+        <JsonLd data={graph(organizationSchema(), websiteSchema())} />
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <GoogleAnalytics />

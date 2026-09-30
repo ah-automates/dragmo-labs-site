@@ -33,9 +33,11 @@ export const STRATEGY_CALL_CTA = "Request Your Free Strategy Call";
 export const footerLinks = {
   explore: [
     { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
     { label: "Products", href: "/products" },
     { label: "Case Studies", href: "/case-studies" },
     { label: "Services", href: "/services" },
+    { label: "FAQ", href: "/faq" },
     { label: "Get in Touch", href: "/contact" },
   ],
 };

@@ -63,12 +63,25 @@ export function ProductSolution({ product }: { product: Product }) {
 function SolutionMedia({ media }: { media: Product["offer"]["solution"]["media"] }) {
   if (media.kind === "video") {
     return (
-      <VideoPlayer
-        src={media.src}
-        poster={media.poster}
-        durationLabel={media.durationLabel}
-        locationTag={LOCATIONS.productSolution}
-      />
+      <figure className="overflow-hidden rounded-card border border-border bg-surface">
+        <VideoPlayer
+          src={media.src}
+          poster={media.poster}
+          durationLabel={media.durationLabel}
+          locationTag={LOCATIONS.productSolution}
+          className="rounded-none border-0 bg-transparent"
+        />
+        {/* Mirrors the `captionSummary` field's own doc comment: read from the
+            video's burned-in captions, not paraphrased. Plain text so what
+            happens in the video (including audio-only beats like a spoken
+            takeover) is crawlable without watching it. */}
+        <figcaption className="border-t border-border px-4 py-3 text-xs leading-relaxed text-foreground-muted">
+          <span className="mb-1 block font-mono text-[0.65rem] font-medium uppercase tracking-[0.14em] text-accent-secondary">
+            What Happens In The Video
+          </span>
+          {media.captionSummary}
+        </figcaption>
+      </figure>
     );
   }
 
