@@ -162,7 +162,7 @@ export function ContactForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...values,
-          website: honeypotRef.current?.value ?? "",
+          hp_leave_empty: honeypotRef.current?.value ?? "",
           turnstileToken: token,
         }),
       });
@@ -269,7 +269,9 @@ export function ContactForm({
        * Honeypot. Positioned off-screen rather than display:none, which is the
        * pattern bots check for. aria-hidden plus tabIndex -1 keep it out of the
        * accessibility tree and tab order, so no real user can reach it — they
-       * would otherwise have their message silently dropped.
+       * would otherwise have their message silently dropped. The name is
+       * deliberately not "website" or "url": phone autofill fills those by name
+       * even with autoComplete off, and a filled honeypot discards the message.
        */}
       <div
         aria-hidden="true"
@@ -278,7 +280,7 @@ export function ContactForm({
         <input
           ref={honeypotRef}
           type="text"
-          name="website"
+          name="hp_leave_empty"
           tabIndex={-1}
           autoComplete="off"
         />

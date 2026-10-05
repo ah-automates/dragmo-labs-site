@@ -150,7 +150,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const verdict = detectSpam(values, asString(raw.website));
+  const verdict = detectSpam(values, asString(raw.hp_leave_empty));
   if (verdict?.kind === "discard") {
     // Answer as though it succeeded, so the sender learns nothing.
     console.warn("[contact] discarded:", verdict.reason);
