@@ -22,7 +22,7 @@ export const emptyContactForm: ContactFormValues = {
 
 export const interestOptions = [
   "AI Voice Agent",
-  "AI WhatsApp Agent",
+  "Chatshift (AI WhatsApp Agent)",
   "3D Property Website",
   "AI Invoice System",
   "AI Solutions",

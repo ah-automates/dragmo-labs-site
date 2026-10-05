@@ -9,11 +9,11 @@ import { products } from "@/lib/products";
 export const metadata: Metadata = {
   title: "Products",
   description:
-    "AI voice and WhatsApp agents, a 3D property website, and an AI invoice system, built for real businesses and running in production today.",
+    "AI voice and WhatsApp agents (Chatshift), a 3D property website, and an AI invoice system, built for real businesses and running in production today.",
 };
 
 export default function ProductsPage() {
-  const [voiceAgent, whatsappAgent, threeD, invoice] = products;
+  const [voiceAgent, chatshift, threeD, invoice] = products;
 
   return (
     <>
@@ -30,7 +30,7 @@ export default function ProductsPage() {
           <h2 className="sr-only">Product catalogue</h2>
           <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-2">
             <ProductSummaryCard product={voiceAgent} size="large" className="lg:col-span-2 lg:row-span-2" />
-            <ProductSummaryCard product={whatsappAgent} size="medium" />
+            <ProductSummaryCard product={chatshift} size="medium" />
             <ProductSummaryCard product={threeD} size="medium" />
             <ProductSummaryCard product={invoice} size="banner" className="lg:col-span-3" />
           </div>

@@ -133,6 +133,13 @@ const nextConfig: NextConfig = {
         destination: "/#testimonials",
         permanent: true,
       },
+      // The WhatsApp agent was renamed Chatshift and its slug changed with it.
+      // The old product URL was live and sitemapped, so it redirects instead of 404ing.
+      {
+        source: "/products/whatsapp-agent",
+        destination: "/products/chatshift",
+        permanent: true,
+      },
     ];
   },
 

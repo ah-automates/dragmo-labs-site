@@ -126,7 +126,7 @@ export type ProductOffer =
       });
 
 export type Product = {
-  slug: "voice-agent" | "whatsapp-agent" | "3d-property-website" | "ai-invoice-system";
+  slug: "voice-agent" | "chatshift" | "3d-property-website" | "ai-invoice-system";
   /** SEO-first: the phrase a buyer actually searches. */
   name: string;
   /** Internal build name, shown as a pill beside `name`, never instead of it. */
@@ -162,7 +162,7 @@ export type Product = {
    * products need nothing here until a real recurring question shows up.
    * Renders as visible `<details>` text and feeds `FAQPage` structured data,
    * which is how a search engine or an AI assistant extracts a direct answer
-   * (e.g. "does the WhatsApp agent support human takeover") without having
+   * (e.g. "does Chatshift support human takeover") without having
    * to infer it from marketing prose.
    */
   faq?: readonly FaqEntry[];
@@ -179,8 +179,8 @@ export type Product = {
 };
 
 const THREE_D_BONUS = {
-  title: "A Free 3D Property Website Template",
-  body: "The same scroll driven, cinematic property site we built for Khatri Real Estate, cloned and rebranded for your agency at no charge. It normally ships as its own engagement. See it in motion on its own product page before you decide anything.",
+  title: "A Free 3D Website Template",
+  body: "The same scroll driven, cinematic site we built for a live client, cloned and rebranded for your business at no charge. It normally ships as its own engagement. See it in motion on its own product page before you decide anything.",
   href: "/products/3d-property-website",
 };
 
@@ -313,7 +313,7 @@ const voiceAgent: Product = {
     credentials: {
       heading: "Built For A Live Agency, Answering Real Calls",
       intro:
-        "This agent was built for Khatri Real Estate, a real estate agency in Dubai, and the recording above is a genuine inbound call to their business line, not a staged demo. The engineering credibility behind it is documented in full on the WhatsApp system built for the same client, covering the retrieval, lead logic, and qualification discipline that this voice agent shares in spirit.",
+        "This agent was built for Khatri Real Estate, a real estate agency in Dubai, and the recording above is a genuine inbound call to their business line, not a staged demo. The engineering credibility behind it is documented in full on Chatshift, the WhatsApp agent built for the same client, covering the retrieval, lead logic, and qualification discipline that this voice agent shares in spirit.",
       client: {
         name: "Khatri Real Estate",
         context:
@@ -324,7 +324,7 @@ const voiceAgent: Product = {
       crossReference: {
         label: "Read the full engineering case study",
         description:
-          "The WhatsApp AI agent built for the same client, with five documented bugs and exactly how each one was found, fixed, and verified against a live database.",
+          "Chatshift, the WhatsApp AI agent built for the same client, with five documented bugs and exactly how each one was found, fixed, and verified against a live database.",
         href: "/case-studies/khatri-real-estate",
       },
     },
@@ -413,18 +413,17 @@ const voiceAgent: Product = {
 };
 
 /* -------------------------------------------------------------------------- */
-/* WhatsApp Agent                                                             */
+/* Chatshift                                                                  */
 /* -------------------------------------------------------------------------- */
 
-const whatsappAgent: Product = {
-  slug: "whatsapp-agent",
+const chatshift: Product = {
+  slug: "chatshift",
   schemaKind: "software",
-  name: "AI WhatsApp Agent for Real Estate",
-  codename: "DragW",
-  dreamBuyer: "Real estate agencies drowning in WhatsApp enquiries their own team cannot keep up with.",
-  shortLabel: "AI WhatsApp Agent",
+  name: "Chatshift — AI WhatsApp Agent",
+  dreamBuyer: "Any business whose WhatsApp enquiries outpace the team that has to answer them.",
+  shortLabel: "Chatshift",
   summary:
-    "An AI that answers every inbound WhatsApp message, including voice notes and images, qualifies the buyer, and hands your team a lead they can act on in minutes.",
+    "An AI that answers every inbound WhatsApp message, including voice notes and images, qualifies the customer, and hands your team a lead they can act on in minutes.",
   icon: "message-circle",
   cardImage: {
     src: "/images/whatsapp-agent-card.jpg",
@@ -437,9 +436,9 @@ const whatsappAgent: Product = {
   // calls the product (see `solution.heading` below, which distances the
   // product from a *rules based* chatbot specifically, not from the word).
   seo: {
-    title: "AI WhatsApp Agent & Chatbot For Real Estate Lead Qualification",
+    title: "Chatshift: AI WhatsApp Agent & Chatbot For Any Business",
     description:
-      "An AI WhatsApp agent and chatbot that answers every inbound message, including voice notes and images, qualifies the buyer, supports human takeover, and hands your team a lead they can act on in minutes.",
+      "Chatshift is an AI WhatsApp agent and chatbot that answers every inbound message, including voice notes and images, qualifies the customer, supports human takeover, and hands your team a lead they can act on in minutes.",
   },
   // Each answer restates a claim the page already makes elsewhere (solution
   // paragraphs, benefits rows, the video caption) in the plain words a buyer
@@ -457,65 +456,65 @@ const whatsappAgent: Product = {
         "Yes. Detaching a conversation pauses the AI for that one contact only. When your team hands it back, the AI resumes without losing the thread of what was said while a human was in control.",
     },
     {
-      question: "Does the WhatsApp agent qualify real estate leads?",
+      question: "Does Chatshift qualify leads for my industry?",
       answer:
-        "Yes. It asks the qualifying questions a good agent would ask, one at a time, in order, gathering area, bedrooms, budget, furnished preference, and move in date before a lead is logged.",
+        "Yes. It asks the qualifying questions you define for what you sell, one at a time, in order, and only logs a lead once those answers are in. Our first deployment qualified real estate enquiries on area, bedrooms, budget, furnished preference, and move in date, and the same pattern works for any set of questions your business needs answered.",
     },
     {
       question: "Does it understand voice notes and images, not just text?",
       answer:
-        "Yes. It reads text, voice notes, and images the same way, so a buyer who sends a voice note gets answered exactly like one who typed.",
+        "Yes. It reads text, voice notes, and images the same way, so a customer who sends a voice note gets answered exactly like one who typed.",
     },
   ],
   offer: {
     kind: "full-offer",
-    calloutAudience: "For Real Estate Agencies Drowning In WhatsApp Enquiries",
+    calloutAudience: "For Any Business Drowning In WhatsApp Enquiries",
     promise: {
       headline: "Every WhatsApp Enquiry, Answered In",
       headlineAccent: "Seconds, Not Tomorrow Morning.",
     },
     promiseBacking:
-      "An AI agent reads every WhatsApp message, text, voice note, or image, answers from your real inventory, and qualifies the buyer, with a human able to take over any chat by hand.",
+      "An AI agent reads every WhatsApp message, text, voice note, or image, answers from your own knowledge base, and qualifies the customer, with a human able to take over any chat by hand.",
     fascinations: [
-      "Why every unread WhatsApp chat sitting in your inbox tonight is a commission another agency is quietly collecting instead.",
-      "The exact two questions an AI agent asks before it ever asks for a buyer's name or number, and why the order matters more than the questions themselves.",
+      "Why every unread WhatsApp chat sitting in your inbox tonight is a sale another business is quietly collecting instead.",
+      "The exact two questions an AI agent asks before it ever asks for a customer's name or number, and why the order matters more than the questions themselves.",
       "What happens when a customer sends a voice note instead of typing, and why most automation tools go completely blind the moment audio arrives.",
       "The one thing Zapier, Make, and n8n cannot actually do that a real conversational agent does without being asked.",
       "How a business owner can take over one single conversation by hand without breaking the AI's memory of everything said before.",
       "Why a customer changing their mind on budget mid conversation is exactly the moment most automated replies quietly fall apart.",
     ],
     problem: {
-      heading: "Every Unanswered Chat Is A Commission Someone Else Collects",
+      heading: "Every Unanswered Chat Is A Sale Someone Else Collects",
       paragraphs: [
-        "A WhatsApp inbox does not politely wait its turn. Fatima is asking about areas near Downtown, Chen wants to know if Marina Gate is still available, Sofia needs a furnished option, Layla is waiting on a floor plan, and Omar has sent 'hello' twice with no reply. Every one of those is a live buyer, and every hour one sits unread is an hour closer to them messaging your competitor instead.",
-        "The volume is not the actual problem. The problem is that a serious enquiry and a tire kicker look identical in a chat list until someone reads them, and by the time a human gets to the bottom of the list, the buyer at the top has often already moved on.",
+        "A WhatsApp inbox does not politely wait its turn. One customer is asking whether a slot is still open this week, another wants the price of the premium package, a third has sent a photo with no message, a fourth needs to know if you cover their area, and someone has sent 'hello' twice with no reply. Every one of those is a live customer, and every hour one sits unread is an hour closer to them messaging your competitor instead.",
+        "The volume is not the actual problem. The problem is that a serious enquiry and a tire kicker look identical in a chat list until someone reads them, and by the time a human gets to the bottom of the list, the customer at the top has often already moved on.",
       ],
       failedAttempts: [
         {
           tried: "Off the shelf automation tools like Zapier, Make, or n8n",
           whyItFailed:
-            "These move data between apps on a trigger. They cannot hold a real conversation, cannot answer 'is there a 3 bed in Dubai Hills for rent' from your actual inventory, and cannot ask a follow up question based on what the buyer just said.",
+            "These move data between apps on a trigger. They cannot hold a real conversation, cannot answer 'is that slot still free on Thursday' from your actual availability, and cannot ask a follow up question based on what the customer just said.",
         },
         {
           tried: "A junior team member assigned to WhatsApp full time",
           whyItFailed:
-            "Works until they are on lunch, handling another chat, or asleep, and a real estate enquiry rarely waits politely for someone to become free.",
+            "Works until they are on lunch, handling another chat, or asleep, and an inbound enquiry rarely waits politely for someone to become free.",
         },
         {
           tried: "A saved-replies template library",
           whyItFailed:
-            "Answers the question a buyer typed, not the one they actually meant, and cannot ask a qualifying follow up on its own.",
+            "Answers the question a customer typed, not the one they actually meant, and cannot ask a qualifying follow up on its own.",
         },
       ],
     },
     solution: {
       heading: "An Agent That Actually Converses, Not A Bot That Matches Keywords",
       paragraphs: [
-        "This is a real conversational AI agent, not a rules based chatbot and not an automation platform bolted onto WhatsApp. It reads your actual property data, asks the qualifying questions a good agent would ask, and only pulls in a human when a human is genuinely needed.",
+        "This is a real conversational AI agent, not a rules based chatbot and not an automation platform bolted onto WhatsApp. It reads your actual product, service, and availability data, asks the qualifying questions a good salesperson would ask, and only pulls in a human when a human is genuinely needed.",
         "And when a human is needed, your team can trigger a human takeover: detach the AI for that one conversation, WhatsApp Desktop style, take over by hand, and hand it back later without the AI losing the thread of what was said while they were in control.",
       ],
       categoricalDifference:
-        "Zapier, Make, and n8n move a message from one app to another. They do not know what a 3 bedroom apartment in Dubai Hills rents for, and they cannot ask a follow up question in response to what a buyer just said. This does both, from your own knowledge base, in a real back and forth conversation.",
+        "Zapier, Make, and n8n move a message from one app to another. They do not know whether a slot is still free on Thursday or what your premium package costs, and they cannot ask a follow up question in response to what a customer just said. This does both, from your own knowledge base, in a real back and forth conversation.",
       media: {
         kind: "video",
         src: "/videos/dragw-demo.mp4",
@@ -527,38 +526,38 @@ const whatsappAgent: Product = {
         },
         durationLabel: "A real conversation, recorded in full",
         captionSummary:
-          "A chat list stacked with unanswered buyer questions. A caller asks about a 3 bed in Dubai Hills for rent, and the agent answers instantly with a real listing and a real price. It gathers area, bedrooms, budget, furnished preference, and move in date one field at a time, each shown checked off as it is collected, then logs a new rental request. The agent is shown next to every off the shelf automation tool it replaces, then the owner's own Detach control for a human takeover, letting a human take over any single conversation instantly and hand it back to the AI later. Closes on: AI when you want it, you, when it matters.",
+          "One recorded conversation from our first deployment, a real estate agency. A chat list stacked with unanswered buyer questions, then a caller asks about a 3 bed in Dubai Hills for rent, and the agent answers instantly with a real listing and a real price. It gathers the qualifying fields one at a time, each shown checked off as it is collected, then logs a new rental request. The agent is shown next to every off the shelf automation tool it replaces, then the owner's own Detach control for a human takeover, letting a human take over any single conversation instantly and hand it back to the AI later. The questions change with your business; the sequence does not. Closes on: AI when you want it, you, when it matters.",
       },
     },
     credentials: {
       heading: "Five Real Bugs, Found And Fixed On A Live System",
       intro:
-        "This is not a demo built to look good in a sales video. It is a production system running on Khatri Real Estate's real WhatsApp number, and every fix below happened on that live system, verified against the actual database, not reasoned about in the abstract.",
+        "This is not a demo built to look good in a sales video. Our first deployment runs on a live WhatsApp Business number, the hardest version of this problem: high volume, and every enquiry worth real money. Every fix below happened on that live system, verified against the actual database, not reasoned about in the abstract.",
       client: {
         name: "Khatri Real Estate",
         context: "A real estate agency in Dubai running this system on their live WhatsApp Business number.",
         location: "Dubai, UAE",
       },
-      proof: proofBySlug["whatsapp-agent"],
+      proof: proofBySlug["chatshift"],
     },
     benefits: {
       heading: "What It Does, And What That Actually Means For Your Team",
       rows: [
         {
           feature: "Reads text, voice notes, and images",
-          benefit: "A buyer who sends a voice note gets answered exactly like one who typed.",
+          benefit: "A customer who sends a voice note gets answered exactly like one who typed.",
         },
         {
-          feature: "Answers from your real property knowledge base",
-          benefit: "No generic reply. A specific answer about a specific listing, in seconds.",
+          feature: "Answers from your own knowledge base",
+          benefit: "No generic reply. A specific answer about your actual offer, in seconds.",
         },
         {
           feature: "Asks one qualifying question at a time, in order",
-          benefit: "A buyer never feels interrogated, and never gets asked something they already answered.",
+          benefit: "A customer never feels interrogated, and never gets asked something they already answered.",
         },
         {
-          feature: "Tracks the latest value when a buyer changes their mind",
-          benefit: "A revised budget or area updates the lead cleanly instead of creating a confused duplicate.",
+          feature: "Tracks the latest value when a customer changes their mind",
+          benefit: "A revised budget or requirement updates the lead cleanly instead of creating a confused duplicate.",
         },
         {
           feature: "Human takeover (Detach) on any conversation",
@@ -571,7 +570,7 @@ const whatsappAgent: Product = {
       ],
     },
     socialProof: {
-      heading: "Running On A Live Agency's Real Inbox",
+      heading: "Running On A Live Business's Real Inbox",
       statement:
         "Khatri Real Estate uses this system on their actual WhatsApp Business number today. This is not a pitch deck screenshot, it is a working piece of their business.",
       caseStudySlug: "khatri-real-estate",
@@ -622,11 +621,11 @@ const whatsappAgent: Product = {
     },
     callToAction: {
       heading: CALL_TO_ACTION_INTRO,
-      command: "Request your free strategy call for the AI WhatsApp Agent below.",
-      formLocation: "product_whatsapp_agent",
+      command: "Request your free strategy call for Chatshift below.",
+      formLocation: "product_chatshift",
     },
     postscript: [
-      "P.S. Every unread chat in your WhatsApp inbox tonight is a buyer deciding whether to wait for you or message someone else. The map above costs you nothing and the call itself is free, so the real cost is the one you are already paying every time a chat sits unread past the hour it arrived.",
+      "P.S. Every unread chat in your WhatsApp inbox tonight is a customer deciding whether to wait for you or message someone else. The map above costs you nothing and the call itself is free, so the real cost is the one you are already paying every time a chat sits unread past the hour it arrived.",
       "Request your free strategy call above, or at minimum, count how many chats in your inbox right now have gone more than an hour without a reply. That number is the one worth solving for.",
     ],
   },
@@ -989,7 +988,7 @@ const aiInvoiceSystem: Product = {
   },
 };
 
-export const products: Product[] = [voiceAgent, whatsappAgent, threeDPropertyWebsite, aiInvoiceSystem];
+export const products: Product[] = [voiceAgent, chatshift, threeDPropertyWebsite, aiInvoiceSystem];
 
 export const productsBySlug = Object.fromEntries(
   products.map((product) => [product.slug, product]),

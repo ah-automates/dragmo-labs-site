@@ -1,5 +1,5 @@
 import type { ProofEntry } from "@/lib/proof";
-import { invoiceSystemProof, whatsappAgentProof } from "@/lib/proof";
+import { invoiceSystemProof, chatshiftProof } from "@/lib/proof";
 import type { Product } from "@/lib/products";
 
 /**
@@ -49,18 +49,18 @@ const khatriRealEstate: CaseStudy = {
   title: "Two Channels, One Agency: A Voice Agent And A WhatsApp Inbox For Khatri Real Estate",
   summary:
     "Khatri Real Estate's phone and WhatsApp lines are the two places a buyer's enquiry actually arrives. Both now run through AI agents that answer immediately, qualify the buyer against real inventory, and hand the team a lead ready to act on, with a human able to take over either channel by hand at any moment.",
-  tags: ["WhatsApp Agent", "Voice Agent", "Real Estate"],
+  tags: ["Chatshift", "Voice Agent", "Real Estate"],
   challenge: [
     "A real estate enquiry does not wait for office hours. It arrives as a phone call during a viewing, or as a WhatsApp message stacked behind a dozen others in an inbox nobody can read in real time. Khatri needed both channels answered immediately, with real inventory knowledge behind the answer, not a generic hold message or a keyword matching bot.",
     "The harder requirement was qualification, not just response. A reply that does not gather area, budget, bedrooms, and timeline is not a lead, it is a transcript. And whatever answered a channel had to hand off cleanly to a human the moment a conversation genuinely needed one, without losing the thread of what had already been said.",
   ],
   build: [
-    "The WhatsApp system is a single Next.js application that owns the entire path: webhook receipt, signature verification, media handling (text, voice notes transcribed with Whisper, images, documents), the agent's own tool calling reasoning loop, reply delivery, and a live web inbox, backed by Supabase Postgres with Row Level Security and Realtime.",
+    "Chatshift is a single Next.js application that owns the entire path: webhook receipt, signature verification, media handling (text, voice notes transcribed with Whisper, images, documents), the agent's own tool calling reasoning loop, reply delivery, and a live web inbox, backed by Supabase Postgres with Row Level Security and Realtime.",
     "The agent runs a two stage qualification: first the questions the intent actually requires (property type, area, bedrooms, budget, timeline), only then contact details, so a general question is never forced through a full intake form. A lead only ever gets submitted once the state genuinely changes, tracked in an append-only leads table rather than trusted to the model's own memory of what it has already done.",
     "The owner keeps a Detach control on every single conversation: WhatsApp Desktop style, one click hands a conversation to a human, and the AI stays silent on that contact until handed back, with every message still logged so re-attaching later is never amnesiac about what was said in between.",
     "The voice agent answers the same business's phone line directly, drawing on the same off plan, current inventory, and resale knowledge, qualifying the caller conversationally, and reading their phone number back digit by digit before logging a fully populated lead row live during the call.",
   ],
-  proof: whatsappAgentProof,
+  proof: chatshiftProof,
   stack: [
     "Next.js 16, App Router, Turbopack",
     "React 19, TypeScript strict",
@@ -70,7 +70,7 @@ const khatriRealEstate: CaseStudy = {
     "OpenAI gpt-4o-mini, text-embedding-3-small, whisper-1",
     "Nodemailer over SMTP",
   ],
-  relatedProductSlugs: ["voice-agent", "whatsapp-agent", "3d-property-website"],
+  relatedProductSlugs: ["voice-agent", "chatshift", "3d-property-website"],
   poster: {
     src: "/images/case-study-khatri.jpg",
     alt: "A voice call and a WhatsApp conversation converging into a single new lead captured for Khatri Real Estate, over a Dubai skyline",

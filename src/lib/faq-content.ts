@@ -41,7 +41,7 @@ export const companyFaq: readonly FaqCategory[] = [
       {
         question: "What industries do you work with?",
         answer:
-          "Our published work today is in real estate (a WhatsApp agent, a voice agent, and a cinematic property website) and a water filtration company's website and invoicing system. The underlying systems, AI agents, automation, and custom software, apply to any business running repetitive processes.",
+          "Our published work today is in real estate (Chatshift, our WhatsApp agent, a voice agent, and a cinematic property website) and a water filtration company's website and invoicing system. Chatshift is built for any niche, and the underlying systems, AI agents, automation, and custom software, apply to any business running repetitive processes.",
       },
     ],
   },

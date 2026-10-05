@@ -23,7 +23,7 @@ export type ProofEntry = {
   verifiedAgainst: string;
 };
 
-export const whatsappAgentProof: ProofEntry[] = [
+export const chatshiftProof: ProofEntry[] = [
   {
     id: "triple-reply",
     symptom:
@@ -118,7 +118,7 @@ export const invoiceSystemProof: ProofEntry[] = [
 ];
 
 /**
- * The voice agent has no `context.md` of its own (unlike the WhatsApp system
+ * The voice agent has no `context.md` of its own (unlike Chatshift
  * and the invoice portal), so it earns no entry here. Borrowing the WhatsApp
  * agent's bug fixes for it would misattribute engineering work that happened
  * on a different system to one it never ran on. Its product page draws
@@ -127,6 +127,6 @@ export const invoiceSystemProof: ProofEntry[] = [
  * `src/lib/products.ts`.
  */
 export const proofBySlug = {
-  "whatsapp-agent": whatsappAgentProof,
+  "chatshift": chatshiftProof,
   "ai-invoice-system": invoiceSystemProof,
 } satisfies Record<string, ProofEntry[]>;

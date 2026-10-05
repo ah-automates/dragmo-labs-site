@@ -47,7 +47,7 @@ export const testimonials: Testimonial[] = [
     role: "Khatri Real Estate",
     company: "Khatri Real Estate",
     status: "approved",
-    productSlugs: ["voice-agent", "whatsapp-agent"],
+    productSlugs: ["voice-agent", "chatshift"],
     caseStudySlug: "khatri-real-estate",
   },
   {
