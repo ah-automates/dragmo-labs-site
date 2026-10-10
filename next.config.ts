@@ -24,6 +24,13 @@ const META_PIXEL_SCRIPT_SRC = "https://connect.facebook.net";
 const META_PIXEL_CONNECT_SRC = "https://www.facebook.com https://connect.facebook.net";
 const META_PIXEL_IMG_SRC = "https://www.facebook.com";
 
+/**
+ * Chatbot widget, loaded from `cbm.dragmolabs.app` in the root layout. The
+ * widget itself calls back to the same host for chat traffic.
+ */
+const CHATBOT_SCRIPT_SRC = "https://cbm.dragmolabs.app";
+const CHATBOT_CONNECT_SRC = "https://cbm.dragmolabs.app";
+
 const IS_DEV = process.env.NODE_ENV !== "production";
 
 /**
@@ -53,13 +60,13 @@ const DEV_CONNECT_SRC = IS_DEV ? " ws: wss:" : "";
  */
 const CSP = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' ${TURNSTILE} ${GA_SCRIPT_SRC} ${META_PIXEL_SCRIPT_SRC}${DEV_SCRIPT_SRC}`,
+  `script-src 'self' 'unsafe-inline' ${TURNSTILE} ${GA_SCRIPT_SRC} ${META_PIXEL_SCRIPT_SRC} ${CHATBOT_SCRIPT_SRC}${DEV_SCRIPT_SRC}`,
   // Tailwind and next/font both emit inline <style> blocks.
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: blob: ${GA_IMG_SRC} ${META_PIXEL_IMG_SRC}`,
   "font-src 'self' data:",
   "media-src 'self'",
-  `connect-src 'self' ${TURNSTILE} ${GA_CONNECT_SRC} ${META_PIXEL_CONNECT_SRC}${DEV_CONNECT_SRC}`,
+  `connect-src 'self' ${TURNSTILE} ${GA_CONNECT_SRC} ${META_PIXEL_CONNECT_SRC} ${CHATBOT_CONNECT_SRC}${DEV_CONNECT_SRC}`,
   `frame-src ${TURNSTILE}`,
   "object-src 'none'",
   "base-uri 'self'",

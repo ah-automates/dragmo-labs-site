@@ -86,7 +86,7 @@ export function A11yMenu() {
       className="fixed z-40 print:hidden"
       style={{
         bottom: "max(1.25rem, env(safe-area-inset-bottom))",
-        right: "max(1.25rem, env(safe-area-inset-right))",
+        left: "max(1.25rem, env(safe-area-inset-left))",
       }}
     >
       <AnimatePresence>
@@ -100,10 +100,10 @@ export function A11yMenu() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.98 }}
             transition={{ duration: 0.24, ease: EASE }}
-            style={{ transformOrigin: "bottom right" }}
+            style={{ transformOrigin: "bottom left" }}
             /* Height is capped to the gap between the navbar and the trigger,
                so the panel can never slide under the fixed header. */
-            className="absolute bottom-full right-0 mb-3 flex max-h-[calc(100svh-11rem)] w-[min(19rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-card border border-border-strong bg-surface shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9)]"
+            className="absolute bottom-full left-0 mb-3 flex max-h-[calc(100svh-11rem)] w-[min(19rem,calc(100vw-2.5rem))] flex-col overflow-hidden rounded-card border border-border-strong bg-surface shadow-[0_24px_60px_-20px_rgba(0,0,0,0.9)]"
           >
             <div className="flex shrink-0 items-center justify-between gap-4 border-b border-border py-3 pl-5 pr-3">
               <h2 className="font-heading text-sm font-bold tracking-tight text-foreground">
