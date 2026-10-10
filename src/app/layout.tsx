@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import Script from "next/script";
 
 import { A11yMenu } from "@/components/a11y/a11y-menu";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
@@ -137,6 +138,11 @@ export default function RootLayout({
           </main>
           <Footer />
         </A11yProvider>
+        <Script
+          src="https://cbm.dragmolabs.app/v1/widget.js"
+          data-bot="pk_0e188be5c0a64eb8bf57be93bba4a302"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
